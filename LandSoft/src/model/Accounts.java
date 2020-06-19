@@ -11,131 +11,131 @@ package model;
  */
 public class Accounts {
 
-    private int AccountID;
-    private String AccountName;
-    private String FirstName;
-    private String LastName;
-    private boolean Gender;
-    private String BirthDay;
-    private String Email;
-    private String Phone;
-    private String Address;
-    private String AccountPassword;
-    private byte[] Image;
-    private String Description;
+    private int accountID;
+    private String userName;
+    private String firstName;
+    private String lastName;
+    private boolean gender;
+    private String birthDay;
+    private String email;
+    private String phone;
+    private String address;
+    private String password;
+    private byte[] image;
+    private String description;
 
     public Accounts() {
     }
 
-    public Accounts(int AccountID, String AccountName, String FirstName, String LastName, boolean Gender, String BirthDay, String Email, String Phone, String Address, String AccountPassword, byte[] Image, String Description) {
-        this.AccountID = AccountID;
-        this.AccountName = AccountName;
-        this.FirstName = FirstName;
-        this.LastName = LastName;
-        this.Gender = Gender;
-        this.BirthDay = BirthDay;
-        this.Email = Email;
-        this.Phone = Phone;
-        this.Address = Address;
-        this.AccountPassword = AccountPassword;
-        this.Image = Image;
-        this.Description = Description;
+    public Accounts(int accountID, String userName, String firstName, String lastName, boolean gender, String birthDay, String email, String phone, String address, String password, byte[] image, String description) {
+        this.accountID = accountID;
+        this.userName = userName;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.gender = gender;
+        this.birthDay = birthDay;
+        this.email = email;
+        this.phone = phone;
+        this.address = address;
+        this.password = password;
+        this.image = image;
+        this.description = description;
     }
 
     public int getAccountID() {
-        return AccountID;
+        return accountID;
     }
 
-    public void setAccountID(int AccountID) {
-        this.AccountID = AccountID;
+    public void setAccountID(int accountID) {
+        this.accountID = accountID;
     }
 
-    public String getAccountName() {
-        return AccountName;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setAccountName(String AccountName) {
-        this.AccountName = AccountName;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getFirstName() {
-        return FirstName;
+        return firstName;
     }
 
-    public void setFirstName(String FirstName) {
-        this.FirstName = FirstName;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
     public String getLastName() {
-        return LastName;
+        return lastName;
     }
 
-    public void setLastName(String LastName) {
-        this.LastName = LastName;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public boolean isGender() {
-        return Gender;
+        return gender;
     }
 
-    public void setGender(boolean Gender) {
-        this.Gender = Gender;
+    public void setGender(boolean gender) {
+        this.gender = gender;
     }
 
     public String getBirthDay() {
-        return BirthDay;
+        return birthDay;
     }
 
-    public void setBirthDay(String BirthDay) {
-        this.BirthDay = BirthDay;
+    public void setBirthDay(String birthDay) {
+        this.birthDay = birthDay;
     }
 
     public String getEmail() {
-        return Email;
+        return email;
     }
 
-    public void setEmail(String Email) {
-        this.Email = Email;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPhone() {
-        return Phone;
+        return phone;
     }
 
-    public void setPhone(String Phone) {
-        this.Phone = Phone;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public String getAddress() {
-        return Address;
+        return address;
     }
 
-    public void setAddress(String Address) {
-        this.Address = Address;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
-    public String getAccountPassword() {
-        return AccountPassword;
+    public String getPassword() {
+        return password;
     }
 
-    public void setAccountPassword(String AccountPassword) {
-        this.AccountPassword = AccountPassword;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public byte[] getImage() {
-        return Image;
+        return image;
     }
 
-    public void setImage(byte[] Image) {
-        this.Image = Image;
+    public void setImage(byte[] image) {
+        this.image = image;
     }
 
     public String getDescription() {
-        return Description;
+        return description;
     }
 
-    public void setDescription(String Description) {
-        this.Description = Description;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
 }
