@@ -246,6 +246,7 @@ public final class dialogSignUp extends javax.swing.JDialog {
             if (password.length() > 20) {
                 JOptionPane.showMessageDialog(null, "Password no more than 20 characters !");
                 txtPassword.requestFocus();
+                txtPassword.setText("");
                 return;
             }
             controller.AccountsController.signUpAccounts(userName, email, phoneNumber, password);

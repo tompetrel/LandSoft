@@ -85,7 +85,7 @@ public class AccountsController {
     //Kiểm tra Phone đã tồn tại chưa ?
     public static boolean checkExistPhoneNumber(String phoneNumber) throws ClassNotFoundException, SQLException {
         conn = controller.ConnectionSQL.connectSQLServer();
-        sql = "  select PhoneNumber from Accounts where PhoneNumber = ?";
+        sql = "select PhoneNumber from Accounts where PhoneNumber = ?";
         ps = conn.prepareStatement(sql);
         ps.setString(1, phoneNumber);
         rs = ps.executeQuery();
@@ -109,4 +109,33 @@ public class AccountsController {
         ps.setString(4, MD5(password));//Password được mã hóa MD5
         ps.executeUpdate();
     }
+
+    //Kiểm tra Email có tồn tại và thuộc Username đang làm việc không ?
+    public static boolean checkEmailBelongUsername(String userName, String email) throws ClassNotFoundException, SQLException, NoSuchAlgorithmException {
+        conn = controller.ConnectionSQL.connectSQLServer();
+        sql = "select Email from Accounts where UserName = ? AND Email = ?";
+        ps = conn.prepareStatement(sql);
+        ps.setString(1, userName);
+        ps.setString(2, email);
+        rs = ps.executeQuery();
+        while (rs.next()) {
+            rs.close();
+            ps.close();
+            conn.close();
+            return true;
+        }
+        return false;
+    }
+
+    //Thay đổi Password (new password)
+    public static void changePassword(String userName, String email, String password) throws ClassNotFoundException, SQLException, NoSuchAlgorithmException {
+        conn = controller.ConnectionSQL.connectSQLServer();
+        sql = "update Accounts set Password = ? where UserName = ? AND Email = ?";
+        ps = conn.prepareStatement(sql);
+        ps.setString(1, MD5(password));
+        ps.setString(2, userName);
+        ps.setString(3, email);
+        ps.executeUpdate();
+    }
+
 }
