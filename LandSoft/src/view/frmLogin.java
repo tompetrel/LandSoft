@@ -6,6 +6,15 @@
 package view;
 
 import java.awt.Color;
+import java.awt.Font;
+import java.awt.Label;
+import java.awt.font.TextAttribute;
+import java.security.NoSuchAlgorithmException;
+import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.JOptionPane;
 import javax.swing.border.Border;
@@ -147,6 +156,11 @@ public final class frmLogin extends javax.swing.JFrame {
         btnLogin.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
         btnLogin.setForeground(new java.awt.Color(255, 255, 255));
         btnLogin.setText("Log In");
+        btnLogin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLoginActionPerformed(evt);
+            }
+        });
 
         btnSignUp.setBackground(new java.awt.Color(204, 204, 204));
         btnSignUp.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
@@ -161,8 +175,25 @@ public final class frmLogin extends javax.swing.JFrame {
         btnForgotPassword.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnForgotPassword.setForeground(new java.awt.Color(0, 51, 255));
         btnForgotPassword.setText("Forgot Password ?");
+        btnForgotPassword.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnForgotPassword.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnForgotPasswordMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnForgotPasswordMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnForgotPasswordMouseExited(evt);
+            }
+        });
 
         checkShowPassword.setText("Show Password");
+        checkShowPassword.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                checkShowPasswordActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -249,6 +280,74 @@ public final class frmLogin extends javax.swing.JFrame {
         int y = evt.getYOnScreen();
         this.setLocation(x - xx, y - yy);
     }//GEN-LAST:event_jPanel1MouseDragged
+
+    private void checkShowPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkShowPasswordActionPerformed
+        if (checkShowPassword.isSelected()) {
+            txtPassword.setEchoChar((char) 0);
+        } else {
+            txtPassword.setEchoChar('*');
+        }
+    }//GEN-LAST:event_checkShowPasswordActionPerformed
+
+    private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
+        try {
+            String userName = txtUsername.getText();
+            String password = txtPassword.getText();
+            //Kiểm tra nhập liệu
+            //Username
+            if (userName.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Username not be empty !");
+                txtUsername.requestFocus();
+                return;
+            }
+            if (userName.length() > 20) {
+                JOptionPane.showMessageDialog(null, "Username no more than 20 characters !");
+                txtUsername.requestFocus();
+                return;
+            }
+            //Password
+            if (password.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Password not be empty !");
+                txtPassword.requestFocus();
+                return;
+            }
+            if (password.length() > 20) {
+                JOptionPane.showMessageDialog(null, "Password no more than 20 characters !");
+                txtPassword.requestFocus();
+                return;
+            }
+            if (!controller.AccountsController.checkLoginAccounts(userName, password)) {
+                JOptionPane.showMessageDialog(null, "Username or Password incorrect !");
+                txtUsername.requestFocus();
+                txtPassword.setText("");
+                return;
+            } else {
+                new frmHome().setVisible(true);
+                this.dispose();
+            }
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(frmLogin.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(frmLogin.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(frmLogin.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnLoginActionPerformed
+
+    private void btnForgotPasswordMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnForgotPasswordMouseClicked
+        new dialogForgotPassword(this, true).setVisible(true);
+    }//GEN-LAST:event_btnForgotPasswordMouseClicked
+
+    private void btnForgotPasswordMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnForgotPasswordMouseEntered
+        Font font = btnForgotPassword.getFont();
+        Map<TextAttribute, Object> attributes = new HashMap<>(font.getAttributes());
+        attributes.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
+        btnForgotPassword.setFont(font.deriveFont(attributes));
+    }//GEN-LAST:event_btnForgotPasswordMouseEntered
+
+    private void btnForgotPasswordMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnForgotPasswordMouseExited
+        btnForgotPassword.setFont(new Font("Tahoma", Font.BOLD, 12));
+    }//GEN-LAST:event_btnForgotPasswordMouseExited
 
     /**
      * @param args the command line arguments

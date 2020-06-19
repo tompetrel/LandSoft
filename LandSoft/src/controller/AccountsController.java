@@ -21,6 +21,35 @@ public class AccountsController {
     static ResultSet rs;
     static String sql;
 
+    //Mã hóa MD5 cho password
+    public static String MD5(String msg) throws NoSuchAlgorithmException {
+        MessageDigest md = MessageDigest.getInstance("MD5");
+        md.update(msg.getBytes());
+        byte bytedata[] = md.digest();
+        StringBuffer sb = new StringBuffer();
+        for (int i = 0; i < bytedata.length; i++) {
+            sb.append(Integer.toString((bytedata[i] & 0xff) + 0x100, 16).substring(1));
+        }
+        return sb.toString();
+    }
+
+    //Kiểm tra Username và Password có đúng không ?
+    public static boolean checkLoginAccounts(String userName, String password) throws ClassNotFoundException, SQLException, NoSuchAlgorithmException {
+        conn = controller.ConnectionSQL.connectSQLServer();
+        sql = "select UserName, Password from Accounts where UserName = ? AND Password = ?";
+        ps = conn.prepareStatement(sql);
+        ps.setString(1, userName);
+        ps.setString(2, MD5(password));
+        rs = ps.executeQuery();
+        while (rs.next()) {
+            rs.close();
+            ps.close();
+            conn.close();
+            return true;
+        }
+        return false;
+    }
+
     //Kiểm tra UserName đã tồn tại chưa ?
     public static boolean checkExistUserName(String userName) throws ClassNotFoundException, SQLException {
         conn = controller.ConnectionSQL.connectSQLServer();
@@ -67,18 +96,6 @@ public class AccountsController {
             return true;
         }
         return false;
-    }
-
-    //Mã hóa MD5 cho password
-    public static String MD5(String msg) throws NoSuchAlgorithmException {
-        MessageDigest md = MessageDigest.getInstance("MD5");
-        md.update(msg.getBytes());
-        byte bytedata[] = md.digest();
-        StringBuffer sb = new StringBuffer();
-        for (int i = 0; i < bytedata.length; i++) {
-            sb.append(Integer.toString((bytedata[i] & 0xff) + 0x100, 16).substring(1));
-        }
-        return sb.toString();
     }
 
     //Tạo Account mới
