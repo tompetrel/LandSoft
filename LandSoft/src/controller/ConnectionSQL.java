@@ -18,7 +18,7 @@ public class ConnectionSQL {
     public static Connection connectSQLServer() throws ClassNotFoundException, SQLException {
         String JDBC_DRIVER = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
         String DB_URL = "jdbc:sqlserver://localhost;";
-        String DATABASENAME = "databaseName=LandSoft";
+        String DATABASENAME = "databaseName=LandSoft;";
         String USER = "user=sa;";
         String PASS = "password=123456";
         Class.forName(JDBC_DRIVER);

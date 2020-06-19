@@ -18,7 +18,7 @@ public class Accounts {
     private boolean gender;
     private String birthDay;
     private String email;
-    private String phone;
+    private String phoneNumber;
     private String address;
     private String password;
     private byte[] image;
@@ -27,7 +27,7 @@ public class Accounts {
     public Accounts() {
     }
 
-    public Accounts(int accountID, String userName, String firstName, String lastName, boolean gender, String birthDay, String email, String phone, String address, String password, byte[] image, String description) {
+    public Accounts(int accountID, String userName, String firstName, String lastName, boolean gender, String birthDay, String email, String phoneNumber, String address, String password, byte[] image, String description) {
         this.accountID = accountID;
         this.userName = userName;
         this.firstName = firstName;
@@ -35,7 +35,7 @@ public class Accounts {
         this.gender = gender;
         this.birthDay = birthDay;
         this.email = email;
-        this.phone = phone;
+        this.phoneNumber = phoneNumber;
         this.address = address;
         this.password = password;
         this.image = image;
@@ -98,12 +98,12 @@ public class Accounts {
         this.email = email;
     }
 
-    public String getPhone() {
-        return phone;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public String getAddress() {

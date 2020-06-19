@@ -5,6 +5,10 @@
  */
 package view;
 
+import java.security.NoSuchAlgorithmException;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -46,7 +50,7 @@ public final class dialogSignUp extends javax.swing.JDialog {
         txtEmail = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        txtPhone = new javax.swing.JTextField();
+        txtPhoneNumber = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         txtPassword = new javax.swing.JPasswordField();
         checkShowPassword = new javax.swing.JCheckBox();
@@ -73,9 +77,9 @@ public final class dialogSignUp extends javax.swing.JDialog {
         jLabel3.setText("Email:");
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel4.setText("Phone:");
+        jLabel4.setText("Phone number:");
 
-        txtPhone.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtPhoneNumber.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel5.setText("Password:");
@@ -84,6 +88,11 @@ public final class dialogSignUp extends javax.swing.JDialog {
 
         checkShowPassword.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         checkShowPassword.setText("Show password");
+        checkShowPassword.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                checkShowPasswordActionPerformed(evt);
+            }
+        });
 
         btnSignUp.setBackground(new java.awt.Color(51, 102, 255));
         btnSignUp.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
@@ -120,7 +129,7 @@ public final class dialogSignUp extends javax.swing.JDialog {
                     .addComponent(txtEmail, javax.swing.GroupLayout.DEFAULT_SIZE, 328, Short.MAX_VALUE)
                     .addComponent(jLabel3)
                     .addComponent(jLabel4)
-                    .addComponent(txtPhone, javax.swing.GroupLayout.DEFAULT_SIZE, 328, Short.MAX_VALUE)
+                    .addComponent(txtPhoneNumber, javax.swing.GroupLayout.DEFAULT_SIZE, 328, Short.MAX_VALUE)
                     .addComponent(jLabel5)
                     .addComponent(txtPassword)
                     .addComponent(btnSignUp, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -144,7 +153,7 @@ public final class dialogSignUp extends javax.swing.JDialog {
                 .addGap(25, 25, 25)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(txtPhone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtPhoneNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(25, 25, 25)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -164,22 +173,105 @@ public final class dialogSignUp extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSignUpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSignUpActionPerformed
-        //Kiểm tra nhập
-        if (txtUsername.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Username not be empty !");
-            txtUsername.requestFocus();
-            return;
-        }
-        if (txtUsername.getText().length() > 50) {
-            JOptionPane.showMessageDialog(null, "Username no more than 20 characters !");
-            txtUsername.requestFocus();
-            return;
+        try {
+            String userName = txtUsername.getText();
+            String email = txtEmail.getText();
+            String phoneNumber = txtPhoneNumber.getText();
+            String password = txtPassword.getText();
+            //Kiểm tra nhập liệu
+            //Username
+            if (userName.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Username not be empty !");
+                txtUsername.requestFocus();
+                return;
+            }
+            if (userName.length() > 20) {
+                JOptionPane.showMessageDialog(null, "Username no more than 20 characters !");
+                txtUsername.requestFocus();
+                return;
+            }
+            if (controller.AccountsController.checkExistUserName(userName)) {
+                JOptionPane.showMessageDialog(null, "Username " + userName + " exist !");
+                txtUsername.requestFocus();
+                return;
+            }
+            //Email
+            if (email.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Email not be empty !");
+                txtEmail.requestFocus();
+                return;
+            }
+            if (email.length() > 30) {
+                JOptionPane.showMessageDialog(null, "Email no more than 30 characters !");
+                txtEmail.requestFocus();
+                return;
+            }
+            if (!email.matches("^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$")) {
+                JOptionPane.showMessageDialog(null, "Email:  " + email + "  illegal. Exemple: ABC@gmail.com");
+                txtEmail.requestFocus();
+                return;
+            }
+            if (controller.AccountsController.checkExistEmail(email)) {
+                JOptionPane.showMessageDialog(null, "Email " + email + " exist !");
+                txtEmail.requestFocus();
+                return;
+            }
+            //Phone number
+            if (phoneNumber.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Phone number not be empty !");
+                txtPhoneNumber.requestFocus();
+                return;
+            }
+            if (phoneNumber.length() > 10) {
+                JOptionPane.showMessageDialog(null, "Phone number no more than 10 number !");
+                txtPhoneNumber.requestFocus();
+                return;
+            }
+            if (!phoneNumber.matches("0\\d\\d\\d\\d\\d\\d\\d\\d\\d")) {
+                JOptionPane.showMessageDialog(null, "Phone number:  " + phoneNumber + "  illegal. Exemple: 0123456789");
+                txtPhoneNumber.requestFocus();
+                return;
+            }
+            if (controller.AccountsController.checkExistPhoneNumber(phoneNumber)) {
+                JOptionPane.showMessageDialog(null, "Phone number " + phoneNumber + " exist !");
+                txtPhoneNumber.requestFocus();
+                return;
+            }
+            //Password
+            if (password.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Password not be empty !");
+                txtPassword.requestFocus();
+                return;
+            }
+            if (password.length() > 20) {
+                JOptionPane.showMessageDialog(null, "Password no more than 20 characters !");
+                txtPassword.requestFocus();
+                return;
+            }
+            controller.AccountsController.signUpAccounts(userName, email, phoneNumber, password);
+            JOptionPane.showMessageDialog(null, "Sign up Successfully !");
+            this.dispose();
+
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(dialogSignUp.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(dialogSignUp.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(dialogSignUp.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnSignUpActionPerformed
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         this.dispose();
     }//GEN-LAST:event_btnBackActionPerformed
+
+    private void checkShowPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkShowPasswordActionPerformed
+        if (checkShowPassword.isSelected()) {
+            txtPassword.setEchoChar((char) 0);
+        } else {
+            txtPassword.setEchoChar('*');
+        }
+    }//GEN-LAST:event_checkShowPasswordActionPerformed
 
     /**
      * @param args the command line arguments
@@ -236,7 +328,7 @@ public final class dialogSignUp extends javax.swing.JDialog {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTextField txtEmail;
     private javax.swing.JPasswordField txtPassword;
-    private javax.swing.JTextField txtPhone;
+    private javax.swing.JTextField txtPhoneNumber;
     private javax.swing.JTextField txtUsername;
     // End of variables declaration//GEN-END:variables
 }
