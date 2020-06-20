@@ -127,8 +127,8 @@ public class AccountsController {
         return false;
     }
 
-    //Thay đổi Password (new password)
-    public static void changePassword(String userName, String email, String password) throws ClassNotFoundException, SQLException, NoSuchAlgorithmException {
+    //New Password
+    public static void forgotPassword(String userName, String email, String password) throws ClassNotFoundException, SQLException, NoSuchAlgorithmException {
         conn = controller.ConnectionSQL.connectSQLServer();
         sql = "update Accounts set Password = ? where UserName = ? AND Email = ?";
         ps = conn.prepareStatement(sql);

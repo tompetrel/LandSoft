@@ -221,7 +221,7 @@ public final class dialogForgotPassword extends javax.swing.JDialog {
                 txtPassword.setText("");
                 return;
             }
-            controller.AccountsController.changePassword(password, userName, email);
+            controller.AccountsController.forgotPassword(password, userName, email);
             JOptionPane.showMessageDialog(null, "New Password Successfully !");
             this.dispose();
 
