@@ -322,7 +322,7 @@ public final class frmLogin extends javax.swing.JFrame {
                 txtPassword.setText("");
                 return;
             } else {
-                new frmHome().setVisible(true);
+                new frmManagement().setVisible(true);
                 this.dispose();
             }
         } catch (ClassNotFoundException ex) {
