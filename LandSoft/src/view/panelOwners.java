@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JTable;
+import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -35,6 +35,7 @@ public final class panelOwners extends javax.swing.JPanel {
     void initGUIPanelOwners() {
         btnUpdate.setEnabled(false);
         btnDelete.setEnabled(false);
+        radioMale.setSelected(true);
 
         TableColumnModel columnModel = tblOwners.getColumnModel();
         columnModel.getColumn(0).setPreferredWidth(5);
@@ -145,7 +146,7 @@ public final class panelOwners extends javax.swing.JPanel {
         tblOwners = new javax.swing.JTable();
         jPanel5 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        txtBirthDay = new com.toedter.calendar.JDateChooser();
+        chooseDate = new com.toedter.calendar.JDateChooser();
         jLabel4 = new javax.swing.JLabel();
         txtFirstName = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
@@ -215,8 +216,7 @@ public final class panelOwners extends javax.swing.JPanel {
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel2.setText("BỉrthDay:");
 
-        txtBirthDay.setDateFormatString("yyyy-MM-dd\n");
-        txtBirthDay.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        chooseDate.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel4.setText("FirstName:");
@@ -259,6 +259,11 @@ public final class panelOwners extends javax.swing.JPanel {
 
         btnUpdate.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/icon_update.png"))); // NOI18N
         btnUpdate.setText("Update");
+        btnUpdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUpdateActionPerformed(evt);
+            }
+        });
 
         btnDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/icon_delete.png"))); // NOI18N
         btnDelete.setText("Delete");
@@ -330,7 +335,7 @@ public final class panelOwners extends javax.swing.JPanel {
                         .addGap(18, 18, 18)
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(txtEmail)
-                            .addComponent(txtBirthDay, javax.swing.GroupLayout.DEFAULT_SIZE, 230, Short.MAX_VALUE)
+                            .addComponent(chooseDate, javax.swing.GroupLayout.DEFAULT_SIZE, 230, Short.MAX_VALUE)
                             .addComponent(txtPhoneNumber))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 143, Short.MAX_VALUE)
                         .addComponent(jLabel10))
@@ -390,7 +395,7 @@ public final class panelOwners extends javax.swing.JPanel {
                             .addComponent(radioFemale)))
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtBirthDay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(chooseDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel2)
                             .addComponent(jLabel10))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -417,10 +422,9 @@ public final class panelOwners extends javax.swing.JPanel {
         String firstName = tblOwners.getValueAt(index, 2).toString();
         String lastName = tblOwners.getValueAt(index, 3).toString();
         String gender = tblOwners.getValueAt(index, 4).toString();
-        TableModel model1 = tblOwners.getModel();
         try {
             Date birthDay = new SimpleDateFormat("yyyy-MM-dd").parse((String) model.getValueAt(index, 5));
-            txtBirthDay.setDate(birthDay);
+            chooseDate.setDate(birthDay);
         } catch (ParseException ex) {
             Logger.getLogger(panelOwners.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -453,22 +457,228 @@ public final class panelOwners extends javax.swing.JPanel {
         txtFirstName.setText("");
         txtLastName.setText("");
         radioMale.setSelected(true);
-        txtBirthDay.setDate(null);
+        chooseDate.setDate(null);
         txtEmail.setText("");
         txtPhoneNumber.setText("");
         txtAddress.setText("");
     }//GEN-LAST:event_btnRefreshActionPerformed
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-        txtOwnerID.setText("");
-        txtFirstName.setText("");
-        txtLastName.setText("");
-        radioMale.setSelected(true);
-        txtBirthDay.setDate(null);
-        txtEmail.setText("");
-        txtPhoneNumber.setText("");
-        txtAddress.setText("");
+        try {
+            String firstName = txtFirstName.getText();
+            String lastName = txtLastName.getText();
+            boolean gender = false;
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            String birthDay = dateFormat.format(chooseDate.getDate());
+            String email = txtEmail.getText();
+            String phoneNumber = txtPhoneNumber.getText();
+            String address = txtAddress.getText();
+
+            //first name
+            if (firstName.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "First name not be empty !");
+                txtFirstName.requestFocus();
+                return;
+            }
+            if (firstName.length() > 20) {
+                JOptionPane.showMessageDialog(null, "First name no more than 20 characters !");
+                txtFirstName.requestFocus();
+                return;
+            }
+            //last name
+            if (lastName.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Last name not be empty !");
+                txtLastName.requestFocus();
+                return;
+            }
+            if (lastName.length() > 20) {
+                JOptionPane.showMessageDialog(null, "Last name no more than 20 characters !");
+                txtLastName.requestFocus();
+                return;
+            }
+            //Gender
+            if (radioMale.isSelected()) {
+                gender = true;
+            } else {
+                gender = false;
+            }
+            //Birth day
+//            if (chooseDate.getDate()==null) {
+//                JOptionPane.showMessageDialog(null, "Please choose BirthDay !");
+//                return;
+//            }
+
+            //Email
+            if (email.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Email not be empty !");
+                txtEmail.requestFocus();
+                return;
+            }
+            if (email.length() > 20) {
+                JOptionPane.showMessageDialog(null, "Email no more than 30 characters !");
+                txtEmail.requestFocus();
+                return;
+            }
+            if (!email.matches("^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$")) {
+                JOptionPane.showMessageDialog(null, "Email:  " + email + "  illegal. Exemple: ABC@gmail.com");
+                txtEmail.requestFocus();
+                return;
+            }
+            if (controller.OwnersController.checkExistEmail(email)) {
+                JOptionPane.showMessageDialog(null, "Email " + email + " exist !");
+                txtEmail.requestFocus();
+                return;
+            }
+            //Phone number
+            if (phoneNumber.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Phone number not be empty !");
+                txtPhoneNumber.requestFocus();
+                return;
+            }
+            if (phoneNumber.length() > 10) {
+                JOptionPane.showMessageDialog(null, "Phone number no more than 10 number !");
+                txtPhoneNumber.requestFocus();
+                return;
+            }
+            if (!phoneNumber.matches("0\\d\\d\\d\\d\\d\\d\\d\\d\\d")) {
+                JOptionPane.showMessageDialog(null, "Phone number:  " + phoneNumber + "  illegal. Exemple: 0123456789");
+                txtPhoneNumber.requestFocus();
+                return;
+            }
+            if (controller.OwnersController.checkExistPhoneNumber(phoneNumber)) {
+                JOptionPane.showMessageDialog(null, "Phone number " + phoneNumber + " exist !");
+                txtPhoneNumber.requestFocus();
+                return;
+            }
+            if (address.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Address not be empty !");
+                txtAddress.requestFocus();
+                return;
+            }
+            if (address.length() > 50) {
+                JOptionPane.showMessageDialog(null, "Address no more than 50 character!");
+                txtAddress.requestFocus();
+                return;
+            }
+
+            int result = controller.OwnersController.addNewOwners(firstName, lastName, gender, birthDay, email, phoneNumber, address);
+            if (result > 0) {
+                JOptionPane.showMessageDialog(null, "Add new owner Successfully");
+            } else {
+                JOptionPane.showMessageDialog(null, "Add new owner Failly");
+            }
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(panelOwners.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(panelOwners.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }//GEN-LAST:event_btnAddActionPerformed
+
+    private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
+        try {
+            int OwnerID = Integer.parseInt(txtOwnerID.getText());
+            String firstName = txtFirstName.getText();
+            String lastName = txtLastName.getText();
+            boolean gender = false;
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            String birthDay = dateFormat.format(chooseDate.getDate());
+            String email = txtEmail.getText();
+            String phoneNumber = txtPhoneNumber.getText();
+            String address = txtAddress.getText();
+
+            //first name
+            if (firstName.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "First name not be empty !");
+                txtFirstName.requestFocus();
+                return;
+            }
+            if (firstName.length() > 20) {
+                JOptionPane.showMessageDialog(null, "First name no more than 20 characters !");
+                txtFirstName.requestFocus();
+                return;
+            }
+            //last name
+            if (lastName.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Last name not be empty !");
+                txtLastName.requestFocus();
+                return;
+            }
+            if (lastName.length() > 20) {
+                JOptionPane.showMessageDialog(null, "Last name no more than 20 characters !");
+                txtLastName.requestFocus();
+                return;
+            }
+            //Gender
+            if (radioMale.isSelected()) {
+                gender = true;
+            } else {
+                gender = false;
+            }
+            //Birth day
+//            if (chooseDate.getDate()==null) {
+//                JOptionPane.showMessageDialog(null, "Please choose BirthDay !");
+//                return;
+//            }
+
+//Email
+            if (email.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Email not be empty !");
+                txtEmail.requestFocus();
+                return;
+            }
+            if (email.length() > 20) {
+                JOptionPane.showMessageDialog(null, "Email no more than 30 characters !");
+                txtEmail.requestFocus();
+                return;
+            }
+            if (!email.matches("^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$")) {
+                JOptionPane.showMessageDialog(null, "Email:  " + email + "  illegal. Exemple: ABC@gmail.com");
+                txtEmail.requestFocus();
+                return;
+            }
+            if (controller.OwnersController.checkExistEmailOfOwnerOther(email, OwnerID)) {
+                JOptionPane.showMessageDialog(null, "Email " + email + " exist !");
+                txtEmail.requestFocus();
+                return;
+            }
+//Phone number
+            if (phoneNumber.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Phone number not be empty !");
+                txtPhoneNumber.requestFocus();
+                return;
+            }
+            if (phoneNumber.length() > 10) {
+                JOptionPane.showMessageDialog(null, "Phone number no more than 10 number !");
+                txtPhoneNumber.requestFocus();
+                return;
+            }
+            if (!phoneNumber.matches("0\\d\\d\\d\\d\\d\\d\\d\\d\\d")) {
+                JOptionPane.showMessageDialog(null, "Phone number:  " + phoneNumber + "  illegal. Exemple: 0123456789");
+                txtPhoneNumber.requestFocus();
+                return;
+            }
+            if (controller.OwnersController.checkExistPhoneNumber(phoneNumber)) {
+                JOptionPane.showMessageDialog(null, "Phone number " + phoneNumber + " exist !");
+                txtPhoneNumber.requestFocus();
+                return;
+            }
+            if (address.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Address not be empty !");
+                txtAddress.requestFocus();
+                return;
+            }
+            if (address.length() > 50) {
+                JOptionPane.showMessageDialog(null, "Address no more than 50 character!");
+                txtAddress.requestFocus();
+                return;
+            }
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(panelOwners.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(panelOwners.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnUpdateActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -477,6 +687,7 @@ public final class panelOwners extends javax.swing.JPanel {
     private javax.swing.JButton btnRefresh;
     private javax.swing.JButton btnUpdate;
     private javax.swing.ButtonGroup buttonGroup2;
+    private com.toedter.calendar.JDateChooser chooseDate;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
@@ -495,7 +706,6 @@ public final class panelOwners extends javax.swing.JPanel {
     private javax.swing.JRadioButton radioMale;
     private javax.swing.JTable tblOwners;
     private javax.swing.JTextArea txtAddress;
-    private com.toedter.calendar.JDateChooser txtBirthDay;
     private javax.swing.JTextField txtEmail;
     private javax.swing.JTextField txtFind;
     private javax.swing.JTextField txtFirstName;
