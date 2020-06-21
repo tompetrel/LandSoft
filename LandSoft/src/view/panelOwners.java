@@ -97,22 +97,22 @@ public final class panelOwners extends javax.swing.JPanel {
             List<Owners> listOwners = controller.OwnersController.getListOwners();
             int countRow = 0;
             for (Owners owners : listOwners) {
-                Vector vTepm = new Vector();
+                Vector vTemp = new Vector();
                 countRow++;
-                vTepm.add(countRow);
-                vTepm.add(owners.getOwnerID());
-                vTepm.add(owners.getFirstName());
-                vTepm.add(owners.getLastName());
+                vTemp.add(countRow);
+                vTemp.add(owners.getOwnerID());
+                vTemp.add(owners.getFirstName());
+                vTemp.add(owners.getLastName());
                 if (owners.isGender()) {
-                    vTepm.add("Male");
+                    vTemp.add("Male");
                 } else {
-                    vTepm.add("Female");
+                    vTemp.add("Female");
                 }
-                vTepm.add(owners.getBirthDay());
-                vTepm.add(owners.getEmail());
-                vTepm.add(owners.getPhoneNumber());
-                vTepm.add(owners.getAddress());
-                vData.add(vTepm);
+                vTemp.add(owners.getBirthDay());
+                vTemp.add(owners.getEmail());
+                vTemp.add(owners.getPhoneNumber());
+                vTemp.add(owners.getAddress());
+                vData.add(vTemp);
             }
             DefaultTableModel model = new DefaultTableModel(vData, vCol);
             tblOwners.setModel(model);
@@ -267,6 +267,11 @@ public final class panelOwners extends javax.swing.JPanel {
 
         btnDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/icon_delete.png"))); // NOI18N
         btnDelete.setText("Delete");
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteActionPerformed(evt);
+            }
+        });
 
         btnRefresh.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/icon_refresh.png"))); // NOI18N
         btnRefresh.setText("Refesh");
@@ -327,7 +332,7 @@ public final class panelOwners extends javax.swing.JPanel {
                         .addComponent(txtFind, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 140, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
                             .addComponent(jLabel6)
@@ -337,7 +342,7 @@ public final class panelOwners extends javax.swing.JPanel {
                             .addComponent(txtEmail)
                             .addComponent(chooseDate, javax.swing.GroupLayout.DEFAULT_SIZE, 230, Short.MAX_VALUE)
                             .addComponent(txtPhoneNumber))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 143, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel10))
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addComponent(btnRefresh)
@@ -347,7 +352,7 @@ public final class panelOwners extends javax.swing.JPanel {
                         .addComponent(btnUpdate)
                         .addGap(18, 18, 18)
                         .addComponent(btnDelete)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 202, Short.MAX_VALUE)
                         .addComponent(jLabel1)))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -407,7 +412,7 @@ public final class panelOwners extends javax.swing.JPanel {
                             .addComponent(jLabel8)
                             .addComponent(txtPhoneNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(187, Short.MAX_VALUE))
+                .addContainerGap(118, Short.MAX_VALUE))
         );
 
         add(jPanel5, java.awt.BorderLayout.CENTER);
@@ -468,8 +473,6 @@ public final class panelOwners extends javax.swing.JPanel {
             String firstName = txtFirstName.getText();
             String lastName = txtLastName.getText();
             boolean gender = false;
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-            String birthDay = dateFormat.format(chooseDate.getDate());
             String email = txtEmail.getText();
             String phoneNumber = txtPhoneNumber.getText();
             String address = txtAddress.getText();
@@ -514,7 +517,7 @@ public final class panelOwners extends javax.swing.JPanel {
                 txtEmail.requestFocus();
                 return;
             }
-            if (email.length() > 20) {
+            if (email.length() > 30) {
                 JOptionPane.showMessageDialog(null, "Email no more than 30 characters !");
                 txtEmail.requestFocus();
                 return;
@@ -560,10 +563,13 @@ public final class panelOwners extends javax.swing.JPanel {
                 txtAddress.requestFocus();
                 return;
             }
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            String birthDay = dateFormat.format(chooseDate.getDate());
 
             int result = controller.OwnersController.addNewOwners(firstName, lastName, gender, birthDay, email, phoneNumber, address);
             if (result > 0) {
                 JOptionPane.showMessageDialog(null, "Add new owner Successfully");
+                btnRefreshActionPerformed(evt);
             } else {
                 JOptionPane.showMessageDialog(null, "Add new owner Failly");
             }
@@ -581,8 +587,6 @@ public final class panelOwners extends javax.swing.JPanel {
             String firstName = txtFirstName.getText();
             String lastName = txtLastName.getText();
             boolean gender = false;
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-            String birthDay = dateFormat.format(chooseDate.getDate());
             String email = txtEmail.getText();
             String phoneNumber = txtPhoneNumber.getText();
             String address = txtAddress.getText();
@@ -621,13 +625,13 @@ public final class panelOwners extends javax.swing.JPanel {
 //                return;
 //            }
 
-//Email
+            //Email
             if (email.isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Email not be empty !");
                 txtEmail.requestFocus();
                 return;
             }
-            if (email.length() > 20) {
+            if (email.length() > 30) {
                 JOptionPane.showMessageDialog(null, "Email no more than 30 characters !");
                 txtEmail.requestFocus();
                 return;
@@ -642,7 +646,7 @@ public final class panelOwners extends javax.swing.JPanel {
                 txtEmail.requestFocus();
                 return;
             }
-//Phone number
+            //Phone number
             if (phoneNumber.isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Phone number not be empty !");
                 txtPhoneNumber.requestFocus();
@@ -658,7 +662,7 @@ public final class panelOwners extends javax.swing.JPanel {
                 txtPhoneNumber.requestFocus();
                 return;
             }
-            if (controller.OwnersController.checkExistPhoneNumber(phoneNumber)) {
+            if (controller.OwnersController.checkExistPhoneNumberOfOwnerOther(phoneNumber, OwnerID)) {
                 JOptionPane.showMessageDialog(null, "Phone number " + phoneNumber + " exist !");
                 txtPhoneNumber.requestFocus();
                 return;
@@ -673,12 +677,39 @@ public final class panelOwners extends javax.swing.JPanel {
                 txtAddress.requestFocus();
                 return;
             }
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            String birthDay = dateFormat.format(chooseDate.getDate());
+            Owners owners = new Owners(OwnerID, firstName, lastName, gender, birthDay, email, phoneNumber, address);
+            int result = controller.OwnersController.updateOwner(owners);
+            if (result > 0) {
+                JOptionPane.showMessageDialog(null, "Update owner Successfully !");
+                btnRefreshActionPerformed(evt);
+            } else {
+                JOptionPane.showMessageDialog(null, "Update owner Failly !");
+            }
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(panelOwners.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
             Logger.getLogger(panelOwners.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnUpdateActionPerformed
+
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+        try {
+            int OwnerID = Integer.parseInt(txtOwnerID.getText());
+            int result = controller.OwnersController.deleteOwner(OwnerID);
+            if (result > 0) {
+                JOptionPane.showMessageDialog(null, "Delete owner Successfully !");
+                btnRefreshActionPerformed(evt);
+            } else {
+                JOptionPane.showMessageDialog(null, "Delete owner Failly !");
+            }
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(panelOwners.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(panelOwners.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnDeleteActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

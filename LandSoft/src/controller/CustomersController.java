@@ -12,13 +12,13 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import model.Owners;
+import model.Customers;
 
 /**
  *
  * @author TAI
  */
-public class OwnersController {
+public class CustomersController {
 
     static Connection conn;
     static Statement stmt;
@@ -26,10 +26,10 @@ public class OwnersController {
     static ResultSet rs;
     static String sql;
 
-    public static List<Owners> getListOwners() throws ClassNotFoundException, SQLException {
-        ArrayList<Owners> arrayListOwners = new ArrayList<>();
+    public static List<Customers> getListCustomers() throws ClassNotFoundException, SQLException {
+        ArrayList<Customers> arrayListCustomers = new ArrayList<>();
         conn = controller.ConnectionSQL.connectSQLServer();
-        sql = "SELECT [OwnerID]\n"
+        sql = "SELECT [CustomerID]\n"
                 + "      ,[FirstName]\n"
                 + "      ,[LastName]\n"
                 + "      ,[Gender]\n"
@@ -37,25 +37,25 @@ public class OwnersController {
                 + "      ,[Email]\n"
                 + "      ,[PhoneNumber]\n"
                 + "      ,[Address]\n"
-                + "  FROM [dbo].[Owners] order by OwnerID";
+                + "  FROM [dbo].[Customers]";
         stmt = conn.createStatement();
         rs = stmt.executeQuery(sql);
         while (rs.next()) {
-            Owners owners = new Owners(rs.getInt("OwnerID"), rs.getString("FirstName"), rs.getString("LastName"), rs.getBoolean("Gender"), rs.getString("BirthDay"), rs.getString("Email"), rs.getString("PhoneNumber"), rs.getString("Address"));
-            arrayListOwners.add(owners);
+            Customers customers = new Customers(rs.getInt("CustomerID"), rs.getString("FirstName"), rs.getString("LastName"), rs.getBoolean("Gender"), rs.getString("BirthDay"), rs.getString("Email"), rs.getString("PhoneNumber"), rs.getString("Address"));
+            arrayListCustomers.add(customers);
         }
-        if (arrayListOwners.isEmpty()) {
+        if (arrayListCustomers.isEmpty()) {
             return null;
         } else {
-            return arrayListOwners;
+            return arrayListCustomers;
         }
     }
 
-//ADD
-    public static int addNewOwners(String firstName, String lastName, boolean gender, String birthDay, String email, String phoneNumber, String address) throws ClassNotFoundException, SQLException {
+    //ADD
+    public static int addNewCustomers(String firstName, String lastName, boolean gender, String birthDay, String email, String phoneNumber, String address) throws ClassNotFoundException, SQLException {
 
         conn = controller.ConnectionSQL.connectSQLServer();
-        sql = "insert into Owners(FirstName,LastName,Gender,BirthDay,Email,PhoneNumber,Address) values(?,?,?,?,?,?,?)";
+        sql = "insert into Customers(FirstName,LastName,Gender,BirthDay,Email,PhoneNumber,Address) values(?,?,?,?,?,?,?)";
         ps = conn.prepareStatement(sql);
         ps.setString(1, firstName);
         ps.setString(2, lastName);
@@ -71,7 +71,7 @@ public class OwnersController {
     //Kiểm tra Email đã tồn tại chưa ?
     public static boolean checkExistEmail(String email) throws ClassNotFoundException, SQLException {
         conn = controller.ConnectionSQL.connectSQLServer();
-        sql = "select Email from Owners where Email = ?";
+        sql = "select Email from Customers where Email = ?";
         ps = conn.prepareStatement(sql);
         ps.setString(1, email);
         rs = ps.executeQuery();
@@ -87,7 +87,7 @@ public class OwnersController {
     //Kiểm tra Phone number đã tồn tại chưa ?
     public static boolean checkExistPhoneNumber(String phoneNumber) throws ClassNotFoundException, SQLException {
         conn = controller.ConnectionSQL.connectSQLServer();
-        sql = "select PhoneNumber from Owners where PhoneNumber = ?";
+        sql = "select PhoneNumber from Customers where PhoneNumber = ?";
         ps = conn.prepareStatement(sql);
         ps.setString(1, phoneNumber);
         rs = ps.executeQuery();
@@ -101,28 +101,28 @@ public class OwnersController {
     }
 //UPDATE
 
-    public static int updateOwner(Owners owners) throws ClassNotFoundException, SQLException {
+    public static int updateCustomer(Customers customers) throws ClassNotFoundException, SQLException {
         conn = controller.ConnectionSQL.connectSQLServer();
-        sql = "UPDATE Owners set FirstName = ?,LastName = ?,Gender = ?,BirthDay = ?,Email = ?, PhoneNumber = ?, Address = ? where OwnerID = ?";
+        sql = "UPDATE Customers set FirstName = ?,LastName = ?,Gender = ?,BirthDay = ?,Email = ?, PhoneNumber = ?, Address = ? where CustomerID = ?";
         ps = conn.prepareStatement(sql);
-        ps.setString(1, owners.getFirstName());
-        ps.setString(2, owners.getLastName());
-        ps.setBoolean(3, owners.isGender());
-        ps.setString(4, owners.getBirthDay());
-        ps.setString(5, owners.getEmail());
-        ps.setString(6, owners.getPhoneNumber());
-        ps.setString(7, owners.getAddress());
-        ps.setInt(8, owners.getOwnerID());
+        ps.setString(1, customers.getFirstName());
+        ps.setString(2, customers.getLastName());
+        ps.setBoolean(3, customers.isGender());
+        ps.setString(4, customers.getBirthDay());
+        ps.setString(5, customers.getEmail());
+        ps.setString(6, customers.getPhoneNumber());
+        ps.setString(7, customers.getAddress());
+        ps.setInt(8, customers.getCustomerID());
         return ps.executeUpdate();
     }
 
-    //Kiểm tra Email có tồn tại, không tính Email hiện tại thuộc OwnerID đang chọn ?
-    public static boolean checkExistEmailOfOwnerOther(String email, int OwnerID) throws ClassNotFoundException, SQLException {
+    //Kiểm tra Email có tồn tại, không tính Email hiện tại thuộc CustomerID đang chọn ?
+    public static boolean checkExistEmailOfCustomerOther(String email, int CustomerID) throws ClassNotFoundException, SQLException {
         conn = controller.ConnectionSQL.connectSQLServer();
-        sql = "select Email from Owners where Email = ? and OwnerID != ?";
+        sql = "select Email from Customers where Email = ? and CustomerID != ?";
         ps = conn.prepareStatement(sql);
         ps.setString(1, email);
-        ps.setInt(2, OwnerID);
+        ps.setInt(2, CustomerID);
         rs = ps.executeQuery();
         while (rs.next()) {
             rs.close();
@@ -133,13 +133,13 @@ public class OwnersController {
         return false;
     }
 
-    //Kiểm tra Phone number có tồn tại, không tính Phone number hiện tại thuộc OwnerID đang chọn ?
-    public static boolean checkExistPhoneNumberOfOwnerOther(String phoneNumber, int OwnerID) throws ClassNotFoundException, SQLException {
+    //Kiểm tra Phone number có tồn tại, không tính Phone number hiện tại thuộc CustomerID đang chọn ?
+    public static boolean checkExistPhoneNumberOfCustomerOther(String phoneNumber, int CustomerID) throws ClassNotFoundException, SQLException {
         conn = controller.ConnectionSQL.connectSQLServer();
-        sql = "select PhoneNumber from Owners where PhoneNumber = ? and OwnerID != ?";
+        sql = "select PhoneNumber from Customers where PhoneNumber = ? and CustomerID != ?";
         ps = conn.prepareStatement(sql);
         ps.setString(1, phoneNumber);
-        ps.setInt(2, OwnerID);
+        ps.setInt(2, CustomerID);
         rs = ps.executeQuery();
         while (rs.next()) {
             rs.close();
@@ -151,11 +151,11 @@ public class OwnersController {
     }
 
 //DELETE
-    public static int deleteOwner(int OwnerID) throws ClassNotFoundException, SQLException {
+    public static int deleteCustomer(int CustomerID) throws ClassNotFoundException, SQLException {
         conn = controller.ConnectionSQL.connectSQLServer();
-        sql = "delete from Owners where OwnerID = ?";
+        sql = "delete from Customers where CustomerID = ?";
         ps = conn.prepareStatement(sql);
-        ps.setInt(1, OwnerID);
+        ps.setInt(1, CustomerID);
         return ps.executeUpdate();
     }
 }
