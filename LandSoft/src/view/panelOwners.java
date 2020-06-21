@@ -5,7 +5,14 @@
  */
 package view;
 
+import java.sql.SQLException;
+import java.util.List;
 import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+import model.Owners;
 
 /**
  *
@@ -19,26 +26,60 @@ public final class panelOwners extends javax.swing.JPanel {
     void initGUIPanelOwners() {
         btnUpdate.setEnabled(false);
         btnDelete.setEnabled(false);
+        tblOwners.getColumnModel().getColumn(0).setPreferredWidth(50);
+        tblOwners.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
     }
 
     //Khởi tạo dữ liệu bảng Owners
     void initTableOwners() {
-        Vector vCol = new Vector();
-        vCol.add("Number");
-        vCol.add("OwnerID");
-        vCol.add("First name");
-        vCol.add("Last name");
-        vCol.add("Gender");
-        vCol.add("Birth day");
-        vCol.add("Email");
-        vCol.add("Phone number");
-        vCol.add("Address");
+        try {
+            Vector vCol = new Vector();
+            vCol.add("No.");
+            vCol.add("OwnerID");
+            vCol.add("First name");
+            vCol.add("Last name");
+            vCol.add("Gender");
+            vCol.add("Birth day");
+            vCol.add("Email");
+            vCol.add("Phone number");
+            vCol.add("Address");
+
+            Vector vData = new Vector();
+            List<Owners> listOwners = controller.OwnersController.getListOwners();
+            int countRow = 0;
+            for (Owners owners : listOwners) {
+                Vector vTepm = new Vector();
+                countRow++;
+                vTepm.add(countRow);
+                vTepm.add(owners.getOwnerID());
+                vTepm.add(owners.getFirstName());
+                vTepm.add(owners.getLastName());
+                if (owners.isGender()) {
+                    vTepm.add("Male");
+                } else {
+                    vTepm.add("Female");
+                }
+                vTepm.add(owners.getBirthDay());
+                vTepm.add(owners.getEmail());
+                vTepm.add(owners.getPhoneNumber());
+                vTepm.add(owners.getAddress());
+                vData.add(vTepm);
+            }
+            DefaultTableModel model = new DefaultTableModel(vData, vCol);
+            tblOwners.setModel(model);
+
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(panelOwners.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(panelOwners.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
     }
 
     public panelOwners() {
         initComponents();
         initGUIPanelOwners();
+        initTableOwners();
     }
 
     /**
@@ -130,7 +171,7 @@ public final class panelOwners extends javax.swing.JPanel {
         txtAddress.setRows(5);
         jScrollPane2.setViewportView(txtAddress);
 
-        txtBirthDay.setDateFormatString("dd MM yy\n");
+        txtBirthDay.setDateFormatString("YYYY-MM-DD");
         txtBirthDay.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N

@@ -12,21 +12,22 @@ package model;
 public class Owners {
 
     private int OwnerID;
-    private String firstName, lastName, birthDay, email, phoneNumber, address;
+    private String firstName, lastName;
     private boolean gender;
+    private String birthDay, email, phoneNumber, address;
 
     public Owners() {
     }
 
-    public Owners(int OwnerID, String firstName, String lastName, String birthDay, String email, String phoneNumber, String address, boolean gender) {
+    public Owners(int OwnerID, String firstName, String lastName, boolean gender, String birthDay, String email, String phoneNumber, String address) {
         this.OwnerID = OwnerID;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.gender = gender;
         this.birthDay = birthDay;
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.address = address;
-        this.gender = gender;
     }
 
     public int getOwnerID() {
@@ -51,6 +52,14 @@ public class Owners {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public boolean isGender() {
+        return gender;
+    }
+
+    public void setGender(boolean gender) {
+        this.gender = gender;
     }
 
     public String getBirthDay() {
@@ -83,14 +92,6 @@ public class Owners {
 
     public void setAddress(String address) {
         this.address = address;
-    }
-
-    public boolean isGender() {
-        return gender;
-    }
-
-    public void setGender(boolean gender) {
-        this.gender = gender;
     }
 
 }
