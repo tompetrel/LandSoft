@@ -7,7 +7,6 @@ package view;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.Label;
 import java.awt.font.TextAttribute;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;

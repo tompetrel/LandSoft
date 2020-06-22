@@ -566,12 +566,10 @@ public final class panelOwners extends javax.swing.JPanel {
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
             String birthDay = dateFormat.format(chooseDate.getDate());
 
-            int result = controller.OwnersController.addNewOwners(firstName, lastName, gender, birthDay, email, phoneNumber, address);
-            if (result > 0) {
-                JOptionPane.showMessageDialog(null, "Add new owner Successfully");
+            int index = JOptionPane.showConfirmDialog(null, "Are you want to Add new Owner: " + firstName + " " + lastName + " ?", "Notification", JOptionPane.YES_NO_OPTION);
+            if (index == JOptionPane.YES_OPTION) {
+                controller.OwnersController.addNewOwners(firstName, lastName, gender, birthDay, email, phoneNumber, address);
                 btnRefreshActionPerformed(evt);
-            } else {
-                JOptionPane.showMessageDialog(null, "Add new owner Failly");
             }
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(panelOwners.class.getName()).log(Level.SEVERE, null, ex);
@@ -680,13 +678,13 @@ public final class panelOwners extends javax.swing.JPanel {
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
             String birthDay = dateFormat.format(chooseDate.getDate());
             Owners owners = new Owners(OwnerID, firstName, lastName, gender, birthDay, email, phoneNumber, address);
-            int result = controller.OwnersController.updateOwner(owners);
-            if (result > 0) {
-                JOptionPane.showMessageDialog(null, "Update owner Successfully !");
+
+            int index = JOptionPane.showConfirmDialog(null, "Are you want to Update Owner: " + firstName + " " + lastName + " ?", "Notification", JOptionPane.YES_NO_OPTION);
+            if (index == JOptionPane.YES_OPTION) {
+                controller.OwnersController.updateOwner(owners);
                 btnRefreshActionPerformed(evt);
-            } else {
-                JOptionPane.showMessageDialog(null, "Update owner Failly !");
             }
+
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(panelOwners.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
@@ -697,13 +695,15 @@ public final class panelOwners extends javax.swing.JPanel {
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
         try {
             int OwnerID = Integer.parseInt(txtOwnerID.getText());
-            int result = controller.OwnersController.deleteOwner(OwnerID);
-            if (result > 0) {
-                JOptionPane.showMessageDialog(null, "Delete owner Successfully !");
+            String firstName = txtFirstName.getText();
+            String lastName = txtLastName.getText();
+            
+            int index = JOptionPane.showConfirmDialog(null, "Are you want to Delete Owner: " + firstName + " " + lastName + " ?", "Notification", JOptionPane.YES_NO_OPTION);
+            if (index == JOptionPane.YES_OPTION) {
+                controller.OwnersController.deleteOwner(OwnerID);
                 btnRefreshActionPerformed(evt);
-            } else {
-                JOptionPane.showMessageDialog(null, "Delete owner Failly !");
             }
+
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(panelOwners.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {

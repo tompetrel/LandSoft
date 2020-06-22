@@ -25,6 +25,7 @@ public final class frmManagement extends javax.swing.JFrame {
         panelContent.add(new panelPropertys(), "panelPropertys");
         panelContent.add(new panelOwners(), "panelOwners");
         panelContent.add(new panelCustomers(), "panelCustomers");
+        panelContent.add(new panelPropertysType(), "panelPropertysType");
 
         //Icon title
         ImageIcon icon = new ImageIcon(getClass().getResource("/image/icon_Login.png"));
@@ -52,6 +53,7 @@ public final class frmManagement extends javax.swing.JFrame {
         lblPropertys = new javax.swing.JLabel();
         lblOwners = new javax.swing.JLabel();
         lblCustomers = new javax.swing.JLabel();
+        lblPropertysType = new javax.swing.JLabel();
         panelContent = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -153,6 +155,28 @@ public final class frmManagement extends javax.swing.JFrame {
             }
         });
 
+        lblPropertysType.setBackground(new java.awt.Color(102, 102, 102));
+        lblPropertysType.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lblPropertysType.setForeground(new java.awt.Color(255, 255, 255));
+        lblPropertysType.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblPropertysType.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/icon_type.png"))); // NOI18N
+        lblPropertysType.setText("Propertys type");
+        lblPropertysType.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        lblPropertysType.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        lblPropertysType.setOpaque(true);
+        lblPropertysType.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        lblPropertysType.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblPropertysTypeMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                lblPropertysTypeMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                lblPropertysTypeMouseExited(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -160,6 +184,7 @@ public final class frmManagement extends javax.swing.JFrame {
             .addComponent(lblPropertys, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
             .addComponent(lblOwners, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
             .addComponent(lblCustomers, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
+            .addComponent(lblPropertysType, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -169,7 +194,9 @@ public final class frmManagement extends javax.swing.JFrame {
                 .addComponent(lblOwners, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addComponent(lblCustomers, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 448, Short.MAX_VALUE))
+                .addGap(0, 0, 0)
+                .addComponent(lblPropertysType, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 368, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel2, java.awt.BorderLayout.LINE_START);
@@ -219,6 +246,19 @@ public final class frmManagement extends javax.swing.JFrame {
         layout.show(panelContent, "panelCustomers");
     }//GEN-LAST:event_lblCustomersMouseClicked
 
+    private void lblPropertysTypeMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPropertysTypeMouseEntered
+        lblPropertysType.setBackground(Color.blue);
+    }//GEN-LAST:event_lblPropertysTypeMouseEntered
+
+    private void lblPropertysTypeMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPropertysTypeMouseExited
+        lblPropertysType.setBackground(new Color(102, 102, 102));
+    }//GEN-LAST:event_lblPropertysTypeMouseExited
+
+    private void lblPropertysTypeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPropertysTypeMouseClicked
+        CardLayout layout = (CardLayout) panelContent.getLayout();
+        layout.show(panelContent, "panelPropertysType");
+    }//GEN-LAST:event_lblPropertysTypeMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -263,6 +303,7 @@ public final class frmManagement extends javax.swing.JFrame {
     private javax.swing.JLabel lblCustomers;
     private javax.swing.JLabel lblOwners;
     private javax.swing.JLabel lblPropertys;
+    private javax.swing.JLabel lblPropertysType;
     private javax.swing.JPanel panelContent;
     // End of variables declaration//GEN-END:variables
 }

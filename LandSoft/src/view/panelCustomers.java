@@ -564,13 +564,13 @@ public final class panelCustomers extends javax.swing.JPanel {
             }
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
             String birthDay = dateFormat.format(chooseDate.getDate());
-            int result = controller.CustomersController.addNewCustomers(firstName, lastName, gender, birthDay, email, phoneNumber, address);
-            if (result > 0) {
-                JOptionPane.showMessageDialog(null, "Add new customer Successfully");
+
+            int index = JOptionPane.showConfirmDialog(null, "Are you want to Add new Customer: " + firstName + " " + lastName + " ?", "WARNING", JOptionPane.YES_NO_OPTION);
+            if (index == JOptionPane.YES_OPTION) {
+                controller.CustomersController.addNewCustomers(firstName, lastName, gender, birthDay, email, phoneNumber, address);
                 btnRefreshActionPerformed(evt);
-            } else {
-                JOptionPane.showMessageDialog(null, "Add new customer Failly");
             }
+
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(panelCustomers.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
@@ -678,13 +678,12 @@ public final class panelCustomers extends javax.swing.JPanel {
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
             String birthDay = dateFormat.format(chooseDate.getDate());
             Customers customers = new Customers(CustomerID, firstName, lastName, gender, birthDay, email, phoneNumber, address);
-            int result = controller.CustomersController.updateCustomer(customers);
-            if (result > 0) {
-                JOptionPane.showMessageDialog(null, "Update customer Successfully !");
+            int index = JOptionPane.showConfirmDialog(null, "Are you want to Update Customer: " + firstName + " " + lastName + " ?", "WARNING", JOptionPane.YES_NO_OPTION);
+            if (index == JOptionPane.YES_OPTION) {
+                controller.CustomersController.updateCustomer(customers);
                 btnRefreshActionPerformed(evt);
-            } else {
-                JOptionPane.showMessageDialog(null, "Update customer Failly !");
             }
+
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(panelCustomers.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
@@ -695,13 +694,14 @@ public final class panelCustomers extends javax.swing.JPanel {
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
         try {
             int CustomerID = Integer.parseInt(txtCustomerID.getText());
-            int result = controller.CustomersController.deleteCustomer(CustomerID);
-            if (result > 0) {
-                JOptionPane.showMessageDialog(null, "Delete customer Successfully !");
+            String firstName = txtFirstName.getText();
+            String lastName = txtLastName.getText();
+            int index = JOptionPane.showConfirmDialog(null, "Are you want to Delete Customer: " + firstName + " " + lastName + " ?", "WARNING", JOptionPane.YES_NO_OPTION);
+            if (index == JOptionPane.YES_OPTION) {
+                controller.CustomersController.deleteCustomer(CustomerID);
                 btnRefreshActionPerformed(evt);
-            } else {
-                JOptionPane.showMessageDialog(null, "Delete customer Failly !");
             }
+
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(panelCustomers.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
