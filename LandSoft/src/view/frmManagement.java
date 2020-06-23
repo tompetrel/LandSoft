@@ -22,7 +22,7 @@ public final class frmManagement extends javax.swing.JFrame {
         this.setSize(1200, 700);
         this.setLocationRelativeTo(null);
 
-        panelContent.add(new panelPropertys(), "panelPropertys");
+        panelContent.add(new panelProperty(), "panelProperty");
         panelContent.add(new panelOwners(), "panelOwners");
         panelContent.add(new panelCustomers(), "panelCustomers");
         panelContent.add(new panelPropertysType(), "panelPropertysType");
@@ -233,7 +233,7 @@ public final class frmManagement extends javax.swing.JFrame {
 
     private void lblPropertysMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPropertysMouseClicked
         CardLayout layout = (CardLayout) panelContent.getLayout();
-        layout.show(panelContent, "panelPropertys");
+        layout.show(panelContent, "panelProperty");
     }//GEN-LAST:event_lblPropertysMouseClicked
 
     private void lblOwnersMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblOwnersMouseClicked
