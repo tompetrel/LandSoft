@@ -10,10 +10,8 @@ import java.util.List;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JComponent;
+import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
-import javax.swing.SpinnerModel;
-import javax.swing.SpinnerNumberModel;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
@@ -44,6 +42,7 @@ public final class panelProperty extends javax.swing.JPanel {
             vCol.add("Balcony");
             vCol.add("Pool");
             vCol.add("Garage");
+//            vCol.add("Status");
             vCol.add("Desciption");
 
             Vector vData = new Vector();
@@ -76,6 +75,7 @@ public final class panelProperty extends javax.swing.JPanel {
                 } else {
                     vTemp.add("NO");
                 }
+
                 vTemp.add(property.getDesciption());
                 vData.add(vTemp);
             }
@@ -168,11 +168,9 @@ public final class panelProperty extends javax.swing.JPanel {
         jLabel3 = new javax.swing.JLabel();
         cbbTypeName = new javax.swing.JComboBox<>();
         jLabel4 = new javax.swing.JLabel();
-        txtSquareMeter = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         txtPrice = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        txtOwnerID = new javax.swing.JTextField();
         btnDetailDescription = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
         spinBedrooms = new javax.swing.JSpinner();
@@ -187,6 +185,8 @@ public final class panelProperty extends javax.swing.JPanel {
         jLabel10 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         txtDescription = new javax.swing.JTextArea();
+        txtSquareMeter = new javax.swing.JTextField();
+        txtOwnerID = new javax.swing.JTextField();
 
         setLayout(new java.awt.BorderLayout());
 
@@ -279,8 +279,6 @@ public final class panelProperty extends javax.swing.JPanel {
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel4.setText("Square Meter:");
 
-        txtSquareMeter.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel5.setText("Price(VND):");
 
@@ -288,8 +286,6 @@ public final class panelProperty extends javax.swing.JPanel {
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel6.setText("OwnerID:");
-
-        txtOwnerID.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
         btnDetailDescription.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnDetailDescription.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/icon_show.png"))); // NOI18N
@@ -299,11 +295,13 @@ public final class panelProperty extends javax.swing.JPanel {
         jLabel8.setText("Bedrooms:");
 
         spinBedrooms.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        spinBedrooms.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel9.setText("Bathrooms:");
 
         spinBathrooms.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        spinBathrooms.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
 
         checkBalcony.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         checkBalcony.setText("Balcony");
@@ -330,6 +328,10 @@ public final class panelProperty extends javax.swing.JPanel {
         txtDescription.setRows(5);
         jScrollPane3.setViewportView(txtDescription);
 
+        txtSquareMeter.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+
+        txtOwnerID.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -353,11 +355,15 @@ public final class panelProperty extends javax.swing.JPanel {
                                     .addComponent(jLabel4)
                                     .addComponent(jLabel5)
                                     .addComponent(jLabel6))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtSquareMeter)
-                                    .addComponent(txtPrice)
-                                    .addComponent(txtOwnerID))))
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addGap(6, 6, 6)
+                                        .addComponent(txtSquareMeter))
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(txtPrice)
+                                            .addComponent(txtOwnerID))))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 165, Short.MAX_VALUE)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
@@ -434,10 +440,10 @@ public final class panelProperty extends javax.swing.JPanel {
                         .addGap(18, 18, 18)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4)
-                            .addComponent(txtSquareMeter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(checkBalcony)
                             .addComponent(checkPool)
-                            .addComponent(checkGarage))
+                            .addComponent(checkGarage)
+                            .addComponent(txtSquareMeter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(jPanel2Layout.createSequentialGroup()
@@ -449,12 +455,12 @@ public final class panelProperty extends javax.swing.JPanel {
                                     .addComponent(jLabel6)
                                     .addComponent(txtOwnerID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addComponent(jLabel7)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 61, Short.MAX_VALUE)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel10)
                         .addGap(18, 18, 18)
                         .addComponent(jScrollPane3)))
-                .addContainerGap(150, Short.MAX_VALUE))
+                .addContainerGap(149, Short.MAX_VALUE))
         );
 
         add(jPanel2, java.awt.BorderLayout.CENTER);
@@ -471,7 +477,7 @@ public final class panelProperty extends javax.swing.JPanel {
             String typeID = tblProperty.getValueAt(index, 2).toString();
             String squareMeter = tblProperty.getValueAt(index, 3).toString();
             String price = tblProperty.getValueAt(index, 4).toString();
-            String ownerID = tblProperty.getValueAt(index, 5).toString();
+            int ownerID = Integer.parseInt(tblProperty.getValueAt(index, 5).toString());
             String address = tblProperty.getValueAt(index, 6).toString();
             int bedrooms = Integer.parseInt(tblProperty.getValueAt(index, 7).toString());
             int bathrooms = Integer.parseInt(tblProperty.getValueAt(index, 8).toString());
@@ -489,7 +495,7 @@ public final class panelProperty extends javax.swing.JPanel {
 
             txtSquareMeter.setText(squareMeter);
             txtPrice.setText(price);
-            txtOwnerID.setText(ownerID);
+            txtOwnerID.setText(tblProperty.getValueAt(index, 5).toString());
             txtAddress.setText(address);
             spinBedrooms.setValue(bedrooms);
             spinBathrooms.setValue(bathrooms);
@@ -541,7 +547,44 @@ public final class panelProperty extends javax.swing.JPanel {
     }//GEN-LAST:event_btnRefreshActionPerformed
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-        
+        String squareMeter = txtSquareMeter.getText();
+        String price = txtPrice.getText();
+        int ownerID = Integer.parseInt(txtOwnerID.getText());
+        String address = txtAddress.getText();
+        int bedrooms = Integer.parseInt(spinBedrooms.getValue().toString());
+        int bathrooms = Integer.parseInt(spinBathrooms.getValue().toString());
+        boolean balcony = checkBalcony.isSelected();
+        boolean pool = checkPool.isSelected();
+        boolean garage = checkGarage.isSelected();
+        String description = txtDescription.getText();
+
+        if (squareMeter.isEmpty() || squareMeter.length() > 10 || !squareMeter.matches("\\d")) {
+            JOptionPane.showMessageDialog(null, "Square meter not be empty or more than 10 character !");
+            txtSquareMeter.requestFocus();
+            return;
+        }
+        if (!squareMeter.matches("\\d")) {
+            JOptionPane.showMessageDialog(null, "Square meter must be a number !");
+            txtSquareMeter.requestFocus();
+            return;
+        }
+        if (price.isEmpty() || price.length() > 50) {
+            JOptionPane.showMessageDialog(null, "Price not be empty or more than 50 character !");
+            txtPrice.requestFocus();
+            return;
+        }
+        if (!price.matches("\\d")) {
+            JOptionPane.showMessageDialog(null, "Price must be a number !");
+            txtPrice.requestFocus();
+            return;
+        }
+
+        if (address.isEmpty() || address.length() > 50) {
+            JOptionPane.showMessageDialog(null, "Address not be empty or more than 50 character !");
+            txtAddress.requestFocus();
+            return;
+        }
+
     }//GEN-LAST:event_btnAddActionPerformed
 
 
