@@ -108,18 +108,4 @@ public class TypesController {
         return ps.executeUpdate();
     }
 
-// Lấy ra Type name theo TypeID
-    public static List<String> getListTypeName(int TypeID) throws ClassNotFoundException, SQLException {
-        ArrayList<String> arrayListTypeName = new ArrayList<>();
-        conn = controller.ConnectionSQL.connectSQLServer();
-        sql = "select TypeName from PropertysType where TypeID = ?";
-        ps = conn.prepareStatement(sql);
-        ps.setInt(1, TypeID);
-        rs = ps.executeQuery();
-        while (rs.next()) {
-            arrayListTypeName.add(rs.getString("TypeName"));
-        }
-        return arrayListTypeName;
-    }
-
 }

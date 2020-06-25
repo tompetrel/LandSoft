@@ -19,13 +19,13 @@ import model.Property;
  * @author TAI
  */
 public class PropertyController {
-    
+
     static Connection conn;
     static Statement stmt;
     static PreparedStatement ps;
     static ResultSet rs;
     static String sql;
-    
+
     public static List<Property> getListProperty() throws ClassNotFoundException, SQLException {
         ArrayList<Property> arrayListProperty = new ArrayList<>();
         conn = controller.ConnectionSQL.connectSQLServer();
@@ -105,10 +105,10 @@ public class PropertyController {
         ps.setBoolean(8, balcony);
         ps.setBoolean(9, pool);
         ps.setBoolean(10, garage);
-        ps.setString(12, description);
-        
+        ps.setString(11, description);
+
         return ps.executeUpdate();
-        
+
     }
 
     //Kiểm tra ownerID có tồn tại hay không ?
@@ -126,4 +126,21 @@ public class PropertyController {
         }
         return false;
     }
+
+    // Lấy ra TypeID theo TypeName đang chọn
+    public static int getTypeID(String typeName) throws ClassNotFoundException, SQLException {
+        conn = controller.ConnectionSQL.connectSQLServer();
+        sql = "select TypeID from PropertysType where TypeName = ?";
+        ps = conn.prepareStatement(sql);
+        ps.setString(1, typeName);
+        rs = ps.executeQuery();
+        int typeID = 0;
+        ArrayList<Integer> list = new ArrayList<>();
+        while (rs.next()) {
+            list.add(rs.getInt("TypeID"));
+            typeID = list.get(0);
+        }
+        return typeID;
+    }
+
 }

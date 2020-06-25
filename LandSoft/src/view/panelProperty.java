@@ -12,6 +12,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
+import javax.swing.SpinnerModel;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
@@ -186,7 +188,7 @@ public final class panelProperty extends javax.swing.JPanel {
         jScrollPane3 = new javax.swing.JScrollPane();
         txtDescription = new javax.swing.JTextArea();
         txtSquareMeter = new javax.swing.JTextField();
-        txtOwnerID = new javax.swing.JTextField();
+        spinOwnerID = new javax.swing.JSpinner();
 
         setLayout(new java.awt.BorderLayout());
 
@@ -280,7 +282,7 @@ public final class panelProperty extends javax.swing.JPanel {
         jLabel4.setText("Square Meter:");
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel5.setText("Price(VND):");
+        jLabel5.setText("Price:");
 
         txtPrice.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
@@ -330,7 +332,8 @@ public final class panelProperty extends javax.swing.JPanel {
 
         txtSquareMeter.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
-        txtOwnerID.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        spinOwnerID.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        spinOwnerID.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -363,7 +366,7 @@ public final class panelProperty extends javax.swing.JPanel {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(txtPrice)
-                                            .addComponent(txtOwnerID))))))
+                                            .addComponent(spinOwnerID))))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 165, Short.MAX_VALUE)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
@@ -453,9 +456,9 @@ public final class panelProperty extends javax.swing.JPanel {
                                 .addGap(18, 18, 18)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel6)
-                                    .addComponent(txtOwnerID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(spinOwnerID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addComponent(jLabel7)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 61, Short.MAX_VALUE)))
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel10)
                         .addGap(18, 18, 18)
@@ -495,7 +498,7 @@ public final class panelProperty extends javax.swing.JPanel {
 
             txtSquareMeter.setText(squareMeter);
             txtPrice.setText(price);
-            txtOwnerID.setText(tblProperty.getValueAt(index, 5).toString());
+            spinOwnerID.setValue(ownerID);
             txtAddress.setText(address);
             spinBedrooms.setValue(bedrooms);
             spinBathrooms.setValue(bathrooms);
@@ -533,10 +536,9 @@ public final class panelProperty extends javax.swing.JPanel {
         initGUIPanelProperty();
 
         txtPropertyID.setText("");
-        cbbTypeName.removeAllItems();
         txtSquareMeter.setText("");
         txtPrice.setText("");
-        txtOwnerID.setText("");
+        spinOwnerID.setValue(0);
         txtAddress.setText("");
         spinBedrooms.setValue(0);
         spinBathrooms.setValue(0);
@@ -547,42 +549,75 @@ public final class panelProperty extends javax.swing.JPanel {
     }//GEN-LAST:event_btnRefreshActionPerformed
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-        String squareMeter = txtSquareMeter.getText();
-        String price = txtPrice.getText();
-        int ownerID = Integer.parseInt(txtOwnerID.getText());
-        String address = txtAddress.getText();
-        int bedrooms = Integer.parseInt(spinBedrooms.getValue().toString());
-        int bathrooms = Integer.parseInt(spinBathrooms.getValue().toString());
-        boolean balcony = checkBalcony.isSelected();
-        boolean pool = checkPool.isSelected();
-        boolean garage = checkGarage.isSelected();
-        String description = txtDescription.getText();
+        try {
+            //Lấy typeID theo type name đang chọn
+            String typeName = cbbTypeName.getSelectedItem().toString();
+            int typeID = controller.PropertyController.getTypeID(typeName);
 
-        if (squareMeter.isEmpty() || squareMeter.length() > 10 || !squareMeter.matches("\\d")) {
-            JOptionPane.showMessageDialog(null, "Square meter not be empty or more than 10 character !");
-            txtSquareMeter.requestFocus();
-            return;
-        }
-        if (!squareMeter.matches("\\d")) {
-            JOptionPane.showMessageDialog(null, "Square meter must be a number !");
-            txtSquareMeter.requestFocus();
-            return;
-        }
-        if (price.isEmpty() || price.length() > 50) {
-            JOptionPane.showMessageDialog(null, "Price not be empty or more than 50 character !");
-            txtPrice.requestFocus();
-            return;
-        }
-        if (!price.matches("\\d")) {
-            JOptionPane.showMessageDialog(null, "Price must be a number !");
-            txtPrice.requestFocus();
-            return;
-        }
+            String squareMeter = txtSquareMeter.getText();
+            String price = txtPrice.getText();
+            String address = txtAddress.getText();
+            int ownerID = Integer.parseInt(spinOwnerID.getValue().toString());
+            int bedrooms = Integer.parseInt(spinBedrooms.getValue().toString());
+            int bathrooms = Integer.parseInt(spinBathrooms.getValue().toString());
+            boolean balcony = checkBalcony.isSelected();
+            boolean pool = checkPool.isSelected();
+            boolean garage = checkGarage.isSelected();
+            String description = txtDescription.getText();
 
-        if (address.isEmpty() || address.length() > 50) {
-            JOptionPane.showMessageDialog(null, "Address not be empty or more than 50 character !");
-            txtAddress.requestFocus();
-            return;
+            if (squareMeter.isEmpty() || squareMeter.length() > 10) {
+                JOptionPane.showMessageDialog(null, "Square meter not be empty or more than 10 character !");
+                txtSquareMeter.requestFocus();
+                return;
+            }
+            try {
+                Double.parseDouble(squareMeter);
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Square meter must be a number");
+                txtSquareMeter.requestFocus();
+                return;
+            }
+            if (price.isEmpty() || price.length() > 20) {
+                JOptionPane.showMessageDialog(null, "Price not be empty or more than 50 character !");
+                txtPrice.requestFocus();
+                return;
+            }
+            try {
+                Double.parseDouble(price);
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Price must be a number");
+                txtPrice.requestFocus();
+                return;
+            }
+
+            //Kiểm tra OwnerID có tồn tại
+            if (!controller.PropertyController.checkExistOwnerID(ownerID)) {
+                JOptionPane.showMessageDialog(null, "OwnerID not exist !");
+                spinOwnerID.requestFocus();
+                return;
+            }
+
+            if (address.isEmpty() || address.length() > 50) {
+                JOptionPane.showMessageDialog(null, "Address not be empty or more than 50 character !");
+                txtAddress.requestFocus();
+                return;
+            }
+            if (description.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Address not be empty!");
+                txtDescription.requestFocus();
+                return;
+            }
+            int index = JOptionPane.showConfirmDialog(null, "Are you want to Add new property ?", "Notification", JOptionPane.YES_NO_OPTION);
+            if (index == JOptionPane.YES_OPTION) {
+                //Thực hiện add new Property
+                controller.PropertyController.addNewProperty(typeID, squareMeter, price, ownerID, address, bedrooms, bathrooms, balcony, pool, garage, description);
+                btnRefreshActionPerformed(evt);
+            }
+
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(panelProperty.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(panelProperty.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }//GEN-LAST:event_btnAddActionPerformed
@@ -616,11 +651,11 @@ public final class panelProperty extends javax.swing.JPanel {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSpinner spinBathrooms;
     private javax.swing.JSpinner spinBedrooms;
+    private javax.swing.JSpinner spinOwnerID;
     private javax.swing.JTable tblProperty;
     private javax.swing.JTextArea txtAddress;
     private javax.swing.JTextArea txtDescription;
     private javax.swing.JTextField txtFind;
-    private javax.swing.JTextField txtOwnerID;
     private javax.swing.JTextField txtPrice;
     private javax.swing.JTextField txtPropertyID;
     private javax.swing.JTextField txtSquareMeter;
