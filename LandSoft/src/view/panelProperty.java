@@ -12,8 +12,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
-import javax.swing.SpinnerModel;
-import javax.swing.SpinnerNumberModel;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
@@ -95,7 +93,6 @@ public final class panelProperty extends javax.swing.JPanel {
             btnUpdate.setEnabled(false);
             btnDelete.setEnabled(false);
             btnDetailDescription.setEnabled(false);
-
             cbbTypeName.removeAllItems();
             List<String> listTypeName = controller.PropertyController.getTypeName();
             for (int i = 0; i < listTypeName.size(); i++) {
@@ -154,6 +151,9 @@ public final class panelProperty extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        dialogDetailDescription = new javax.swing.JDialog();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        txtDetailDescription = new javax.swing.JTextArea();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblProperty = new javax.swing.JTable();
@@ -168,7 +168,6 @@ public final class panelProperty extends javax.swing.JPanel {
         jLabel2 = new javax.swing.JLabel();
         txtPropertyID = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        cbbTypeName = new javax.swing.JComboBox<>();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         txtPrice = new javax.swing.JTextField();
@@ -189,6 +188,25 @@ public final class panelProperty extends javax.swing.JPanel {
         txtDescription = new javax.swing.JTextArea();
         txtSquareMeter = new javax.swing.JTextField();
         spinOwnerID = new javax.swing.JSpinner();
+        cbbTypeName = new javax.swing.JComboBox<>();
+
+        txtDetailDescription.setColumns(20);
+        txtDetailDescription.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        txtDetailDescription.setLineWrap(true);
+        txtDetailDescription.setRows(5);
+        txtDetailDescription.setWrapStyleWord(true);
+        jScrollPane4.setViewportView(txtDetailDescription);
+
+        javax.swing.GroupLayout dialogDetailDescriptionLayout = new javax.swing.GroupLayout(dialogDetailDescription.getContentPane());
+        dialogDetailDescription.getContentPane().setLayout(dialogDetailDescriptionLayout);
+        dialogDetailDescriptionLayout.setHorizontalGroup(
+            dialogDetailDescriptionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 473, Short.MAX_VALUE)
+        );
+        dialogDetailDescriptionLayout.setVerticalGroup(
+            dialogDetailDescriptionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 310, Short.MAX_VALUE)
+        );
 
         setLayout(new java.awt.BorderLayout());
 
@@ -231,6 +249,7 @@ public final class panelProperty extends javax.swing.JPanel {
         add(jPanel1, java.awt.BorderLayout.PAGE_START);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/icon_search.png"))); // NOI18N
         jLabel1.setText("Find:");
 
         txtFind.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -252,10 +271,20 @@ public final class panelProperty extends javax.swing.JPanel {
         btnUpdate.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnUpdate.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/icon_update.png"))); // NOI18N
         btnUpdate.setText("Update");
+        btnUpdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUpdateActionPerformed(evt);
+            }
+        });
 
         btnDelete.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/icon_delete.png"))); // NOI18N
         btnDelete.setText("Delete");
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteActionPerformed(evt);
+            }
+        });
 
         btnRefresh.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnRefresh.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/icon_refresh.png"))); // NOI18N
@@ -275,9 +304,6 @@ public final class panelProperty extends javax.swing.JPanel {
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel3.setText("Type name:");
 
-        cbbTypeName.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        cbbTypeName.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel4.setText("Square Meter:");
 
@@ -292,6 +318,11 @@ public final class panelProperty extends javax.swing.JPanel {
         btnDetailDescription.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnDetailDescription.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/icon_show.png"))); // NOI18N
         btnDetailDescription.setText("Detail Desciption");
+        btnDetailDescription.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDetailDescriptionActionPerformed(evt);
+            }
+        });
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel8.setText("Bedrooms:");
@@ -319,6 +350,7 @@ public final class panelProperty extends javax.swing.JPanel {
 
         txtAddress.setColumns(20);
         txtAddress.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        txtAddress.setLineWrap(true);
         txtAddress.setRows(5);
         jScrollPane2.setViewportView(txtAddress);
 
@@ -327,6 +359,7 @@ public final class panelProperty extends javax.swing.JPanel {
 
         txtDescription.setColumns(20);
         txtDescription.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        txtDescription.setLineWrap(true);
         txtDescription.setRows(5);
         jScrollPane3.setViewportView(txtDescription);
 
@@ -334,6 +367,14 @@ public final class panelProperty extends javax.swing.JPanel {
 
         spinOwnerID.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         spinOwnerID.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
+
+        cbbTypeName.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbbTypeName.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        cbbTypeName.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                cbbTypeNameMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -437,9 +478,9 @@ public final class panelProperty extends javax.swing.JPanel {
                         .addGap(18, 18, 18)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3)
-                            .addComponent(cbbTypeName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel9)
-                            .addComponent(spinBathrooms, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(spinBathrooms, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cbbTypeName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4)
@@ -476,6 +517,7 @@ public final class panelProperty extends javax.swing.JPanel {
             btnDetailDescription.setEnabled(true);
 
             int index = tblProperty.getSelectedRow();
+
             String propertyID = tblProperty.getValueAt(index, 1).toString();
             String typeID = tblProperty.getValueAt(index, 2).toString();
             String squareMeter = tblProperty.getValueAt(index, 3).toString();
@@ -490,10 +532,12 @@ public final class panelProperty extends javax.swing.JPanel {
             String desciption = tblProperty.getValueAt(index, 12).toString();
 
             txtPropertyID.setText(propertyID);
+
+            //Nhận type name
             cbbTypeName.removeAllItems();
             List<String> listTypeName = controller.PropertyController.getTypeNameWithID(typeID);
             for (int i = 0; i < listTypeName.size(); i++) {
-                cbbTypeName.addItem(listTypeName.get(i));
+                cbbTypeName.addItem(listTypeName.get(0));
             }
 
             txtSquareMeter.setText(squareMeter);
@@ -603,7 +647,7 @@ public final class panelProperty extends javax.swing.JPanel {
                 return;
             }
             if (description.isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Address not be empty!");
+                JOptionPane.showMessageDialog(null, "Description not be empty!");
                 txtDescription.requestFocus();
                 return;
             }
@@ -622,6 +666,119 @@ public final class panelProperty extends javax.swing.JPanel {
 
     }//GEN-LAST:event_btnAddActionPerformed
 
+    private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
+        try {
+            //Lấy typeID theo type name đang chọn
+            int propertyID = Integer.parseInt(txtPropertyID.getText());
+
+            String typeName = cbbTypeName.getSelectedItem().toString();
+            int typeID = controller.PropertyController.getTypeID(typeName);
+
+            String squareMeter = txtSquareMeter.getText();
+            String price = txtPrice.getText();
+            String address = txtAddress.getText();
+            int ownerID = Integer.parseInt(spinOwnerID.getValue().toString());
+            int bedrooms = Integer.parseInt(spinBedrooms.getValue().toString());
+            int bathrooms = Integer.parseInt(spinBathrooms.getValue().toString());
+            boolean balcony = checkBalcony.isSelected();
+            boolean pool = checkPool.isSelected();
+            boolean garage = checkGarage.isSelected();
+            String description = txtDescription.getText();
+
+            if (squareMeter.isEmpty() || squareMeter.length() > 10) {
+                JOptionPane.showMessageDialog(null, "Square meter not be empty or more than 10 character !");
+                txtSquareMeter.requestFocus();
+                return;
+            }
+            try {
+                Double.parseDouble(squareMeter);
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Square meter must be a number");
+                txtSquareMeter.requestFocus();
+                return;
+            }
+            if (price.isEmpty() || price.length() > 20) {
+                JOptionPane.showMessageDialog(null, "Price not be empty or more than 50 character !");
+                txtPrice.requestFocus();
+                return;
+            }
+            try {
+                Double.parseDouble(price);
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Price must be a number");
+                txtPrice.requestFocus();
+                return;
+            }
+
+            //Kiểm tra OwnerID có tồn tại
+            if (!controller.PropertyController.checkExistOwnerID(ownerID)) {
+                JOptionPane.showMessageDialog(null, "OwnerID not exist !");
+                spinOwnerID.requestFocus();
+                return;
+            }
+
+            if (address.isEmpty() || address.length() > 50) {
+                JOptionPane.showMessageDialog(null, "Address not be empty or more than 50 character !");
+                txtAddress.requestFocus();
+                return;
+            }
+            if (description.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Description not be empty!");
+                txtDescription.requestFocus();
+                return;
+            }
+            int index = JOptionPane.showConfirmDialog(null, "Are you want to Update property ?", "Notification", JOptionPane.YES_NO_OPTION);
+            if (index == JOptionPane.YES_OPTION) {
+                //Thực hiện update Property
+                Property property = new Property(propertyID, typeID, squareMeter, price, ownerID, address, bedrooms, bathrooms, balcony, pool, garage, description);
+                controller.PropertyController.updateProperty(property);
+                btnRefreshActionPerformed(evt);
+            }
+
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(panelProperty.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(panelProperty.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnUpdateActionPerformed
+
+    private void cbbTypeNameMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cbbTypeNameMouseClicked
+        try {
+            cbbTypeName.removeAllItems();
+            List<String> listTypeName = controller.PropertyController.getTypeName();
+            for (int i = 0; i < listTypeName.size(); i++) {
+                cbbTypeName.addItem(listTypeName.get(i));
+            }
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(panelProperty.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(panelProperty.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_cbbTypeNameMouseClicked
+
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+        int propertyID = Integer.parseInt(txtPropertyID.getText());
+        int index = JOptionPane.showConfirmDialog(null, "Are you want to Delete property ?", "Notification", JOptionPane.YES_NO_OPTION);
+        if (index == JOptionPane.YES_OPTION) {
+            try {
+                controller.PropertyController.deleteProperty(propertyID);
+                btnRefreshActionPerformed(evt);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(panelProperty.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                Logger.getLogger(panelProperty.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_btnDeleteActionPerformed
+
+    private void btnDetailDescriptionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDetailDescriptionActionPerformed
+        dialogDetailDescription.setVisible(true);
+        dialogDetailDescription.setSize(400, 400);
+        dialogDetailDescription.setLocationRelativeTo(null);
+        dialogDetailDescription.setResizable(false);
+        txtDetailDescription.setText(txtDescription.getText());
+    }//GEN-LAST:event_btnDetailDescriptionActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdd;
@@ -633,6 +790,7 @@ public final class panelProperty extends javax.swing.JPanel {
     private javax.swing.JCheckBox checkBalcony;
     private javax.swing.JCheckBox checkGarage;
     private javax.swing.JCheckBox checkPool;
+    private javax.swing.JDialog dialogDetailDescription;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
@@ -648,6 +806,7 @@ public final class panelProperty extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSpinner spinBathrooms;
     private javax.swing.JSpinner spinBedrooms;
@@ -655,6 +814,7 @@ public final class panelProperty extends javax.swing.JPanel {
     private javax.swing.JTable tblProperty;
     private javax.swing.JTextArea txtAddress;
     private javax.swing.JTextArea txtDescription;
+    private javax.swing.JTextArea txtDetailDescription;
     private javax.swing.JTextField txtFind;
     private javax.swing.JTextField txtPrice;
     private javax.swing.JTextField txtPropertyID;

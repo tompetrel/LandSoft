@@ -143,4 +143,33 @@ public class PropertyController {
         return typeID;
     }
 
+//Update property
+    public static int updateProperty(Property property) throws ClassNotFoundException, SQLException {
+        conn = controller.ConnectionSQL.connectSQLServer();
+        sql = "update Property set TypeID = ?, SquareMeter = ?, Price = ?, OwnerID = ?, Address = ?, Bedrooms = ?, Bathrooms = ?, Balcony = ?, Pool = ?, Garage = ?, Desciption = ? where PropertyID = ?";
+        ps = conn.prepareStatement(sql);
+        ps.setInt(1, property.getTypeID());
+        ps.setString(2, property.getSquareMeter());
+        ps.setString(3, property.getPrice());
+        ps.setInt(4, property.getOwnerID());
+        ps.setString(5, property.getAddress());
+        ps.setInt(6, property.getBedrooms());
+        ps.setInt(7, property.getBedrooms());
+        ps.setBoolean(8, property.isBalcony());
+        ps.setBoolean(9, property.isPool());
+        ps.setBoolean(10, property.isGarage());
+        ps.setString(11, property.getDesciption());
+        ps.setInt(12, property.getPropertyID());
+
+        return ps.executeUpdate();
+
+    }
+//Delete
+    public static int deleteProperty(int propertyID) throws ClassNotFoundException, SQLException{
+        conn = controller.ConnectionSQL.connectSQLServer();
+        sql = "delete Property where PropertyID = ?";
+        ps = conn.prepareStatement(sql);
+        ps.setInt(1, propertyID);
+        return ps.executeUpdate();
+    }
 }
