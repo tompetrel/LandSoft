@@ -37,12 +37,12 @@ public final class panelProperty extends javax.swing.JPanel {
             vCol.add("Price");
             vCol.add("OwnerID");
             vCol.add("Address");
+            vCol.add("Floor");
             vCol.add("Bedrooms");
             vCol.add("Bathrooms");
             vCol.add("Balcony");
             vCol.add("Pool");
             vCol.add("Garage");
-//            vCol.add("Status");
             vCol.add("Desciption");
 
             Vector vData = new Vector();
@@ -58,6 +58,7 @@ public final class panelProperty extends javax.swing.JPanel {
                 vTemp.add(property.getPrice());
                 vTemp.add(property.getOwnerID());
                 vTemp.add(property.getAddress());
+                vTemp.add(property.getFloor());
                 vTemp.add(property.getBedrooms());
                 vTemp.add(property.getBathrooms());
                 if (property.isBalcony()) {
@@ -189,6 +190,8 @@ public final class panelProperty extends javax.swing.JPanel {
         txtSquareMeter = new javax.swing.JTextField();
         spinOwnerID = new javax.swing.JSpinner();
         cbbTypeName = new javax.swing.JComboBox<>();
+        jLabel11 = new javax.swing.JLabel();
+        spinFloor = new javax.swing.JSpinner();
 
         txtDetailDescription.setColumns(20);
         txtDetailDescription.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
@@ -376,6 +379,12 @@ public final class panelProperty extends javax.swing.JPanel {
             }
         });
 
+        jLabel11.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel11.setText("Floor:");
+
+        spinFloor.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        spinFloor.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -408,28 +417,32 @@ public final class panelProperty extends javax.swing.JPanel {
                                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(txtPrice)
                                             .addComponent(spinOwnerID))))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 165, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 191, Short.MAX_VALUE)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(checkBalcony)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addComponent(jLabel8)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(spinBedrooms))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                                        .addComponent(jLabel9)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(spinBathrooms))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                                        .addComponent(jLabel11)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(spinFloor, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addGap(18, 18, 18)
-                                .addComponent(checkPool)
-                                .addGap(18, 18, 18)
-                                .addComponent(checkGarage))
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
-                                    .addComponent(jLabel8)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(spinBedrooms, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(jPanel2Layout.createSequentialGroup()
-                                    .addComponent(jLabel9)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(spinBathrooms, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(checkBalcony)
+                                    .addComponent(checkPool)
+                                    .addComponent(checkGarage)))
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(jLabel7)
-                                .addGap(18, 18, 18)
+                                .addGap(33, 33, 33)
                                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 169, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 128, Short.MAX_VALUE)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel10)
                             .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -451,7 +464,7 @@ public final class panelProperty extends javax.swing.JPanel {
                 .addGap(50, 50, 50))
         );
 
-        jPanel2Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jLabel8, jLabel9});
+        jPanel2Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jLabel11, jLabel8, jLabel9});
 
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -468,43 +481,50 @@ public final class panelProperty extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel2)
-                            .addComponent(txtPropertyID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel8)
-                            .addComponent(spinBedrooms, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jLabel10)
                         .addGap(18, 18, 18)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel9)
-                            .addComponent(spinBathrooms, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cbbTypeName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel4)
-                            .addComponent(checkBalcony)
-                            .addComponent(checkPool)
-                            .addComponent(checkGarage)
-                            .addComponent(txtSquareMeter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 98, Short.MAX_VALUE)
+                        .addContainerGap(200, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel2)
+                                    .addComponent(txtPropertyID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel11)
+                                    .addComponent(spinFloor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel9)
+                                    .addComponent(spinBathrooms, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(cbbTypeName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(checkPool))
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel8)
+                                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(jLabel4)
+                                        .addComponent(txtSquareMeter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(spinBedrooms, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(checkGarage))))
+                            .addComponent(checkBalcony))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel5)
-                                    .addComponent(txtPrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(jLabel5)
+                                        .addComponent(txtPrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jLabel7))
                                 .addGap(18, 18, 18)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel6)
                                     .addComponent(spinOwnerID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(jLabel7)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel10)
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane3)))
-                .addContainerGap(149, Short.MAX_VALUE))
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
 
         add(jPanel2, java.awt.BorderLayout.CENTER);
@@ -524,12 +544,14 @@ public final class panelProperty extends javax.swing.JPanel {
             String price = tblProperty.getValueAt(index, 4).toString();
             int ownerID = Integer.parseInt(tblProperty.getValueAt(index, 5).toString());
             String address = tblProperty.getValueAt(index, 6).toString();
-            int bedrooms = Integer.parseInt(tblProperty.getValueAt(index, 7).toString());
-            int bathrooms = Integer.parseInt(tblProperty.getValueAt(index, 8).toString());
-            String balcony = tblProperty.getValueAt(index, 9).toString();
-            String pool = tblProperty.getValueAt(index, 10).toString();
-            String garage = tblProperty.getValueAt(index, 11).toString();
-            String desciption = tblProperty.getValueAt(index, 12).toString();
+
+            int floor = Integer.parseInt(tblProperty.getValueAt(index, 7).toString());
+            int bedrooms = Integer.parseInt(tblProperty.getValueAt(index, 8).toString());
+            int bathrooms = Integer.parseInt(tblProperty.getValueAt(index, 9).toString());
+            String balcony = tblProperty.getValueAt(index, 10).toString();
+            String pool = tblProperty.getValueAt(index, 11).toString();
+            String garage = tblProperty.getValueAt(index, 12).toString();
+            String desciption = tblProperty.getValueAt(index, 13).toString();
 
             txtPropertyID.setText(propertyID);
 
@@ -544,6 +566,7 @@ public final class panelProperty extends javax.swing.JPanel {
             txtPrice.setText(price);
             spinOwnerID.setValue(ownerID);
             txtAddress.setText(address);
+            spinFloor.setValue(floor);
             spinBedrooms.setValue(bedrooms);
             spinBathrooms.setValue(bathrooms);
 
@@ -585,6 +608,7 @@ public final class panelProperty extends javax.swing.JPanel {
         spinOwnerID.setValue(0);
         txtAddress.setText("");
         spinBedrooms.setValue(0);
+        spinBedrooms.setValue(0);
         spinBathrooms.setValue(0);
         checkBalcony.setSelected(false);
         checkPool.setSelected(false);
@@ -602,6 +626,8 @@ public final class panelProperty extends javax.swing.JPanel {
             String price = txtPrice.getText();
             String address = txtAddress.getText();
             int ownerID = Integer.parseInt(spinOwnerID.getValue().toString());
+
+            int floor = Integer.parseInt(spinFloor.getValue().toString());
             int bedrooms = Integer.parseInt(spinBedrooms.getValue().toString());
             int bathrooms = Integer.parseInt(spinBathrooms.getValue().toString());
             boolean balcony = checkBalcony.isSelected();
@@ -654,7 +680,7 @@ public final class panelProperty extends javax.swing.JPanel {
             int index = JOptionPane.showConfirmDialog(null, "Are you want to Add new property ?", "Notification", JOptionPane.YES_NO_OPTION);
             if (index == JOptionPane.YES_OPTION) {
                 //Thực hiện add new Property
-                controller.PropertyController.addNewProperty(typeID, squareMeter, price, ownerID, address, bedrooms, bathrooms, balcony, pool, garage, description);
+                controller.PropertyController.addNewProperty(typeID, squareMeter, price, ownerID, address, floor, bedrooms, bathrooms, balcony, pool, garage, description);
                 btnRefreshActionPerformed(evt);
             }
 
@@ -678,6 +704,7 @@ public final class panelProperty extends javax.swing.JPanel {
             String price = txtPrice.getText();
             String address = txtAddress.getText();
             int ownerID = Integer.parseInt(spinOwnerID.getValue().toString());
+            int floor = Integer.parseInt(spinFloor.getValue().toString());
             int bedrooms = Integer.parseInt(spinBedrooms.getValue().toString());
             int bathrooms = Integer.parseInt(spinBathrooms.getValue().toString());
             boolean balcony = checkBalcony.isSelected();
@@ -730,7 +757,7 @@ public final class panelProperty extends javax.swing.JPanel {
             int index = JOptionPane.showConfirmDialog(null, "Are you want to Update property ?", "Notification", JOptionPane.YES_NO_OPTION);
             if (index == JOptionPane.YES_OPTION) {
                 //Thực hiện update Property
-                Property property = new Property(propertyID, typeID, squareMeter, price, ownerID, address, bedrooms, bathrooms, balcony, pool, garage, description);
+                Property property = new Property(propertyID, typeID, squareMeter, price, ownerID, address, floor, bedrooms, bathrooms, balcony, pool, garage, description);
                 controller.PropertyController.updateProperty(property);
                 btnRefreshActionPerformed(evt);
             }
@@ -793,6 +820,7 @@ public final class panelProperty extends javax.swing.JPanel {
     private javax.swing.JDialog dialogDetailDescription;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -810,6 +838,7 @@ public final class panelProperty extends javax.swing.JPanel {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSpinner spinBathrooms;
     private javax.swing.JSpinner spinBedrooms;
+    private javax.swing.JSpinner spinFloor;
     private javax.swing.JSpinner spinOwnerID;
     private javax.swing.JTable tblProperty;
     private javax.swing.JTextArea txtAddress;

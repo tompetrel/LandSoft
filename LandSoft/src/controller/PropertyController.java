@@ -35,6 +35,7 @@ public class PropertyController {
                 + "      ,[Price]\n"
                 + "      ,[OwnerID]\n"
                 + "      ,[Address]\n"
+                + "      ,[Floor]\n"
                 + "      ,[Bedrooms]\n"
                 + "      ,[Bathrooms]\n"
                 + "      ,[Balcony]\n"
@@ -45,7 +46,7 @@ public class PropertyController {
         stmt = conn.createStatement();
         rs = stmt.executeQuery(sql);
         while (rs.next()) {
-            Property property = new Property(rs.getInt("PropertyID"), rs.getInt("TypeID"), rs.getString("SquareMeter"), rs.getString("Price"), rs.getInt("OwnerID"), rs.getString("Address"), rs.getInt("Bedrooms"), rs.getInt("Bathrooms"), rs.getBoolean("Balcony"), rs.getBoolean("Pool"), rs.getBoolean("Garage"), rs.getString("Desciption"));
+            Property property = new Property(rs.getInt("PropertyID"), rs.getInt("TypeID"), rs.getString("SquareMeter"), rs.getString("Price"), rs.getInt("OwnerID"), rs.getString("Address"), rs.getInt("Floor"), rs.getInt("Bedrooms"), rs.getInt("Bathrooms"), rs.getBoolean("Balcony"), rs.getBoolean("Pool"), rs.getBoolean("Garage"), rs.getString("Desciption"));
             arrayListProperty.add(property);
         }
         return arrayListProperty;
@@ -79,7 +80,7 @@ public class PropertyController {
     }
 
 //ADD
-    public static int addNewProperty(int typeID, String squareMetes, String price, int ownerID, String address, int bedrooms, int bathrooms, boolean balcony, boolean pool, boolean garage, String description) throws ClassNotFoundException, SQLException {
+    public static int addNewProperty(int typeID, String squareMetes, String price, int ownerID, String address, int floor, int bedrooms, int bathrooms, boolean balcony, boolean pool, boolean garage, String description) throws ClassNotFoundException, SQLException {
         conn = controller.ConnectionSQL.connectSQLServer();
         sql = "INSERT INTO [dbo].[Property]\n"
                 + "           ([TypeID]\n"
@@ -87,25 +88,26 @@ public class PropertyController {
                 + "           ,[Price]\n"
                 + "           ,[OwnerID]\n"
                 + "           ,[Address]\n"
+                + "           ,[Floor]\n"
                 + "           ,[Bedrooms]\n"
                 + "           ,[Bathrooms]\n"
                 + "           ,[Balcony]\n"
                 + "           ,[Pool]\n"
                 + "           ,[Garage]\n"
-                + "           ,[Desciption])\n"
-                + "     VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+                + "           ,[Desciption]) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
         ps = conn.prepareStatement(sql);
         ps.setInt(1, typeID);
         ps.setString(2, squareMetes);
         ps.setString(3, price);
         ps.setInt(4, ownerID);
         ps.setString(5, address);
-        ps.setInt(6, bedrooms);
-        ps.setInt(7, bathrooms);
-        ps.setBoolean(8, balcony);
-        ps.setBoolean(9, pool);
-        ps.setBoolean(10, garage);
-        ps.setString(11, description);
+        ps.setInt(6, floor);
+        ps.setInt(7, bedrooms);
+        ps.setInt(8, bathrooms);
+        ps.setBoolean(9, balcony);
+        ps.setBoolean(10, pool);
+        ps.setBoolean(11, garage);
+        ps.setString(12, description);
 
         return ps.executeUpdate();
 
@@ -146,26 +148,28 @@ public class PropertyController {
 //Update property
     public static int updateProperty(Property property) throws ClassNotFoundException, SQLException {
         conn = controller.ConnectionSQL.connectSQLServer();
-        sql = "update Property set TypeID = ?, SquareMeter = ?, Price = ?, OwnerID = ?, Address = ?, Bedrooms = ?, Bathrooms = ?, Balcony = ?, Pool = ?, Garage = ?, Desciption = ? where PropertyID = ?";
+        sql = "update Property set TypeID = ?, SquareMeter = ?, Price = ?, OwnerID = ?, Address = ?,Floor = ?, Bedrooms = ?, Bathrooms = ?, Balcony = ?, Pool = ?, Garage = ?, Desciption = ? where PropertyID = ?";
         ps = conn.prepareStatement(sql);
         ps.setInt(1, property.getTypeID());
         ps.setString(2, property.getSquareMeter());
         ps.setString(3, property.getPrice());
         ps.setInt(4, property.getOwnerID());
         ps.setString(5, property.getAddress());
-        ps.setInt(6, property.getBedrooms());
+        ps.setInt(6, property.getFloor());
         ps.setInt(7, property.getBedrooms());
-        ps.setBoolean(8, property.isBalcony());
-        ps.setBoolean(9, property.isPool());
-        ps.setBoolean(10, property.isGarage());
-        ps.setString(11, property.getDesciption());
-        ps.setInt(12, property.getPropertyID());
+        ps.setInt(8, property.getBedrooms());
+        ps.setBoolean(9, property.isBalcony());
+        ps.setBoolean(10, property.isPool());
+        ps.setBoolean(11, property.isGarage());
+        ps.setString(12, property.getDesciption());
+        ps.setInt(13, property.getPropertyID());
 
         return ps.executeUpdate();
 
     }
 //Delete
-    public static int deleteProperty(int propertyID) throws ClassNotFoundException, SQLException{
+
+    public static int deleteProperty(int propertyID) throws ClassNotFoundException, SQLException {
         conn = controller.ConnectionSQL.connectSQLServer();
         sql = "delete Property where PropertyID = ?";
         ps = conn.prepareStatement(sql);

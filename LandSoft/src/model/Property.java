@@ -15,20 +15,21 @@ public class Property {
     private String squareMeter, price;
     private int ownerID;
     private String address;
-    private int bedrooms, bathrooms;
+    private int floor, bedrooms, bathrooms;
     private boolean balcony, pool, garage;
     private String desciption;
 
     public Property() {
     }
 
-    public Property(int propertyID, int typeID, String squareMeter, String price, int ownerID, String address, int bedrooms, int bathrooms, boolean balcony, boolean pool, boolean garage, String desciption) {
+    public Property(int propertyID, int typeID, String squareMeter, String price, int ownerID, String address, int floor, int bedrooms, int bathrooms, boolean balcony, boolean pool, boolean garage, String desciption) {
         this.propertyID = propertyID;
         this.typeID = typeID;
         this.squareMeter = squareMeter;
         this.price = price;
         this.ownerID = ownerID;
         this.address = address;
+        this.floor = floor;
         this.bedrooms = bedrooms;
         this.bathrooms = bathrooms;
         this.balcony = balcony;
@@ -83,6 +84,14 @@ public class Property {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public int getFloor() {
+        return floor;
+    }
+
+    public void setFloor(int floor) {
+        this.floor = floor;
     }
 
     public int getBedrooms() {
