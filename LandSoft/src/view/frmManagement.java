@@ -117,6 +117,7 @@ public final class frmManagement extends javax.swing.JFrame {
         lblPropertys.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/icon_property.png"))); // NOI18N
         lblPropertys.setText("Propertys");
         lblPropertys.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        lblPropertys.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         lblPropertys.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         lblPropertys.setOpaque(true);
         lblPropertys.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -139,6 +140,7 @@ public final class frmManagement extends javax.swing.JFrame {
         lblOwners.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/icon_owner.png"))); // NOI18N
         lblOwners.setText("Owners");
         lblOwners.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        lblOwners.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         lblOwners.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         lblOwners.setOpaque(true);
         lblOwners.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -161,6 +163,7 @@ public final class frmManagement extends javax.swing.JFrame {
         lblCustomers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/icon_customer.png"))); // NOI18N
         lblCustomers.setText("Customers");
         lblCustomers.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        lblCustomers.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         lblCustomers.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         lblCustomers.setOpaque(true);
         lblCustomers.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -183,6 +186,7 @@ public final class frmManagement extends javax.swing.JFrame {
         lblPropertysType.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/icon_type.png"))); // NOI18N
         lblPropertysType.setText("Property Type");
         lblPropertysType.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        lblPropertysType.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         lblPropertysType.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         lblPropertysType.setOpaque(true);
         lblPropertysType.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -205,6 +209,7 @@ public final class frmManagement extends javax.swing.JFrame {
         lblPropertyImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/icon_image.png"))); // NOI18N
         lblPropertyImage.setText("Property Image");
         lblPropertyImage.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        lblPropertyImage.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         lblPropertyImage.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         lblPropertyImage.setOpaque(true);
         lblPropertyImage.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -227,6 +232,7 @@ public final class frmManagement extends javax.swing.JFrame {
         lblTransactions.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/icon_transaction.png"))); // NOI18N
         lblTransactions.setText("Transactions");
         lblTransactions.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        lblTransactions.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         lblTransactions.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         lblTransactions.setOpaque(true);
         lblTransactions.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);

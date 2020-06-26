@@ -96,6 +96,7 @@ public class TransactionsController {
         ps.setInt(5, transactionID);
         return ps.executeUpdate();
     }
+
     public static int deleteTransaction(int transactionID) throws ClassNotFoundException, SQLException {
         conn = controller.ConnectionSQL.connectSQLServer();
         sql = "delete Transactions where TransactionID = ?";
@@ -103,5 +104,5 @@ public class TransactionsController {
         ps.setInt(1, transactionID);
         return ps.executeUpdate();
     }
-    
+
 }

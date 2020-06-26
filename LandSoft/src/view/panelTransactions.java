@@ -65,7 +65,6 @@ public final class panelTransactions extends javax.swing.JPanel {
     void initGUIPanel() {
         btnUpdate.setEnabled(false);
         btnDelete.setEnabled(false);
-        btnShowDetail.setEnabled(false);
 
     }
 
@@ -134,7 +133,6 @@ public final class panelTransactions extends javax.swing.JPanel {
         chooserDate = new com.toedter.calendar.JDateChooser();
         jLabel6 = new javax.swing.JLabel();
         txtFinalFirce = new javax.swing.JTextField();
-        btnShowDetail = new javax.swing.JButton();
         spinPropertyID = new javax.swing.JSpinner();
         spinCustomerID = new javax.swing.JSpinner();
 
@@ -228,6 +226,7 @@ public final class panelTransactions extends javax.swing.JPanel {
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel2.setText("TransactionID:");
 
+        txtTransactionID.setEditable(false);
         txtTransactionID.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -245,10 +244,6 @@ public final class panelTransactions extends javax.swing.JPanel {
         jLabel6.setText("FinalFrice:");
 
         txtFinalFirce.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-
-        btnShowDetail.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        btnShowDetail.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/icon_showdetail.png"))); // NOI18N
-        btnShowDetail.setText("Show Detail");
 
         spinPropertyID.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         spinPropertyID.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
@@ -275,9 +270,7 @@ public final class panelTransactions extends javax.swing.JPanel {
                         .addGap(18, 18, 18)
                         .addComponent(btnUpdate)
                         .addGap(18, 18, 18)
-                        .addComponent(btnDelete)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnShowDetail))
+                        .addComponent(btnDelete))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
@@ -298,7 +291,7 @@ public final class panelTransactions extends javax.swing.JPanel {
                                 .addComponent(jLabel6)
                                 .addGap(18, 18, 18)
                                 .addComponent(txtFinalFirce)))))
-                .addContainerGap(373, Short.MAX_VALUE))
+                .addContainerGap(465, Short.MAX_VALUE))
         );
 
         jPanel2Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jLabel5, jLabel6});
@@ -313,8 +306,7 @@ public final class panelTransactions extends javax.swing.JPanel {
                     .addComponent(btnRefresh)
                     .addComponent(btnAdd)
                     .addComponent(btnUpdate)
-                    .addComponent(btnDelete)
-                    .addComponent(btnShowDetail))
+                    .addComponent(btnDelete))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 2, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -343,7 +335,6 @@ public final class panelTransactions extends javax.swing.JPanel {
     private void tblTransactionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblTransactionMouseClicked
         btnUpdate.setEnabled(true);
         btnDelete.setEnabled(true);
-        btnShowDetail.setEnabled(true);
         int index = tblTransaction.getSelectedRow();
 
         String transactionID = tblTransaction.getValueAt(index, 1).toString();
@@ -504,7 +495,6 @@ public final class panelTransactions extends javax.swing.JPanel {
     private javax.swing.JButton btnAdd;
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnRefresh;
-    private javax.swing.JButton btnShowDetail;
     private javax.swing.JButton btnUpdate;
     private com.toedter.calendar.JDateChooser chooserDate;
     private javax.swing.JLabel jLabel1;
