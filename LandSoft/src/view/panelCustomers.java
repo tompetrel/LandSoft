@@ -504,13 +504,15 @@ public final class panelCustomers extends javax.swing.JPanel {
             } else {
                 gender = false;
             }
-            //Birth day
-//            if (chooseDate.getDate()==null) {
-//                JOptionPane.showMessageDialog(null, "Please choose BirthDay !");
-//                return;
-//            }
-
-            //Email
+            String birthDay;
+            try {
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                birthDay = dateFormat.format(chooseDate.getDate());
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Not choose birthDay");
+                chooseDate.requestFocus();
+                return;
+            }
             if (email.isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Email not be empty !");
                 txtEmail.requestFocus();
@@ -562,8 +564,6 @@ public final class panelCustomers extends javax.swing.JPanel {
                 txtAddress.requestFocus();
                 return;
             }
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-            String birthDay = dateFormat.format(chooseDate.getDate());
 
             int index = JOptionPane.showConfirmDialog(null, "Are you want to Add new Customer: " + firstName + " " + lastName + " ?", "WARNING", JOptionPane.YES_NO_OPTION);
             if (index == JOptionPane.YES_OPTION) {
@@ -617,13 +617,15 @@ public final class panelCustomers extends javax.swing.JPanel {
             } else {
                 gender = false;
             }
-            //Birth day
-//            if (chooseDate.getDate()==null) {
-//                JOptionPane.showMessageDialog(null, "Please choose BirthDay !");
-//                return;
-//            }
-
-            //Email
+            String birthDay;
+            try {
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                birthDay = dateFormat.format(chooseDate.getDate());
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Not choose birthDay");
+                chooseDate.requestFocus();
+                return;
+            }
             if (email.isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Email not be empty !");
                 txtEmail.requestFocus();
@@ -675,11 +677,9 @@ public final class panelCustomers extends javax.swing.JPanel {
                 txtAddress.requestFocus();
                 return;
             }
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-            String birthDay = dateFormat.format(chooseDate.getDate());
-            Customers customers = new Customers(CustomerID, firstName, lastName, gender, birthDay, email, phoneNumber, address);
             int index = JOptionPane.showConfirmDialog(null, "Are you want to Update Customer: " + firstName + " " + lastName + " ?", "WARNING", JOptionPane.YES_NO_OPTION);
             if (index == JOptionPane.YES_OPTION) {
+                Customers customers = new Customers(CustomerID, firstName, lastName, gender, birthDay, email, phoneNumber, address);
                 controller.CustomersController.updateCustomer(customers);
                 btnRefreshActionPerformed(evt);
             }

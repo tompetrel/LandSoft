@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -128,14 +129,14 @@ public final class panelTransactions extends javax.swing.JPanel {
         jLabel2 = new javax.swing.JLabel();
         txtTransactionID = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        txtPropertyID = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        txtCustomerID = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         chooserDate = new com.toedter.calendar.JDateChooser();
         jLabel6 = new javax.swing.JLabel();
         txtFinalFirce = new javax.swing.JTextField();
         btnShowDetail = new javax.swing.JButton();
+        spinPropertyID = new javax.swing.JSpinner();
+        spinCustomerID = new javax.swing.JSpinner();
 
         setLayout(new java.awt.BorderLayout());
 
@@ -200,14 +201,29 @@ public final class panelTransactions extends javax.swing.JPanel {
         btnAdd.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/icon-add.png"))); // NOI18N
         btnAdd.setText("Add");
+        btnAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddActionPerformed(evt);
+            }
+        });
 
         btnUpdate.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnUpdate.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/icon_update.png"))); // NOI18N
         btnUpdate.setText("Update");
+        btnUpdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUpdateActionPerformed(evt);
+            }
+        });
 
         btnDelete.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/icon_delete.png"))); // NOI18N
         btnDelete.setText("Delete");
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteActionPerformed(evt);
+            }
+        });
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel2.setText("TransactionID:");
@@ -217,12 +233,8 @@ public final class panelTransactions extends javax.swing.JPanel {
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel3.setText("PropertyID:");
 
-        txtPropertyID.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel4.setText("CustomerID");
-
-        txtCustomerID.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel5.setText("Date:");
@@ -237,6 +249,12 @@ public final class panelTransactions extends javax.swing.JPanel {
         btnShowDetail.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnShowDetail.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/icon_showdetail.png"))); // NOI18N
         btnShowDetail.setText("Show Detail");
+
+        spinPropertyID.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        spinPropertyID.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
+
+        spinCustomerID.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        spinCustomerID.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -268,8 +286,8 @@ public final class panelTransactions extends javax.swing.JPanel {
                         .addGap(18, 18, 18)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(txtTransactionID)
-                            .addComponent(txtPropertyID)
-                            .addComponent(txtCustomerID, javax.swing.GroupLayout.DEFAULT_SIZE, 230, Short.MAX_VALUE))
+                            .addComponent(spinPropertyID, javax.swing.GroupLayout.DEFAULT_SIZE, 230, Short.MAX_VALUE)
+                            .addComponent(spinCustomerID))
                         .addGap(134, 134, 134)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(jPanel2Layout.createSequentialGroup()
@@ -309,14 +327,14 @@ public final class panelTransactions extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(txtPropertyID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6)
-                    .addComponent(txtFinalFirce, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtFinalFirce, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(spinPropertyID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(txtCustomerID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(155, Short.MAX_VALUE))
+                    .addComponent(spinCustomerID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(153, Short.MAX_VALUE))
         );
 
         add(jPanel2, java.awt.BorderLayout.CENTER);
@@ -330,10 +348,10 @@ public final class panelTransactions extends javax.swing.JPanel {
 
         String transactionID = tblTransaction.getValueAt(index, 1).toString();
         txtTransactionID.setText(transactionID);
-        String propertyID = tblTransaction.getValueAt(index, 2).toString();
-        txtPropertyID.setText(propertyID);
-        String customerID = tblTransaction.getValueAt(index, 3).toString();
-        txtCustomerID.setText(customerID);
+        int propertyID = Integer.parseInt(tblTransaction.getValueAt(index, 2).toString());
+        spinPropertyID.setValue(propertyID);
+        int customerID = Integer.parseInt(tblTransaction.getValueAt(index, 3).toString());
+        spinCustomerID.setValue(customerID);
 
         try {
             Date date = new SimpleDateFormat("yyyy-MM-dd").parse(tblTransaction.getValueAt(index, 4).toString());
@@ -355,12 +373,131 @@ public final class panelTransactions extends javax.swing.JPanel {
         initGUIPanel();
 
         txtTransactionID.setText("");
-        txtPropertyID.setText("");
-        txtCustomerID.setText("");
+        spinPropertyID.setValue(0);
+        spinCustomerID.setValue(0);
         chooserDate.setDate(null);
         txtFinalFirce.setText("");
 
     }//GEN-LAST:event_btnRefreshActionPerformed
+
+    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
+        try {
+            int propertyID = Integer.parseInt(spinPropertyID.getValue().toString());
+            int customerID = Integer.parseInt(spinCustomerID.getValue().toString());
+            String finalPrice = txtFinalFirce.getText();
+
+            //kiểm tra propertyID đã tồn tại chưa ?
+            if (!controller.TransactionsController.checkExistPropertyID(propertyID)) {
+                JOptionPane.showMessageDialog(null, "PropertyID not exist !");
+                spinPropertyID.requestFocus();
+                return;
+            }
+            //kiểm tra CustomerID đã tồn tại chưa ?
+            if (!controller.TransactionsController.checkExistCustomerID(customerID)) {
+                JOptionPane.showMessageDialog(null, "CustomerID not exist !");
+                spinCustomerID.requestFocus();
+                return;
+            }
+
+            String date;
+            try {
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                date = dateFormat.format(chooserDate.getDate());
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Not choose Date");
+                chooserDate.requestFocus();
+                return;
+            }
+            if (finalPrice.isEmpty() || finalPrice.length() > 20) {
+                JOptionPane.showMessageDialog(null, "Final price not be empty or more than 20 character!");
+                txtFinalFirce.requestFocus();
+                return;
+            }
+            try {
+                Integer.parseInt(finalPrice);
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Final price must be a number");
+                txtFinalFirce.requestFocus();
+                return;
+            }
+
+            int index = JOptionPane.showConfirmDialog(null, "Are you want to Add new transaction ?", "Notification", JOptionPane.YES_NO_OPTION);
+            if (index == JOptionPane.YES_OPTION) {
+                controller.TransactionsController.addNewTransaction(propertyID, customerID, date, finalPrice);
+                btnRefreshActionPerformed(evt);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }//GEN-LAST:event_btnAddActionPerformed
+
+    private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
+        try {
+            int transactionID = Integer.parseInt(txtTransactionID.getText());
+            int propertyID = Integer.parseInt(spinPropertyID.getValue().toString());
+            int customerID = Integer.parseInt(spinCustomerID.getValue().toString());
+            String finalPrice = txtFinalFirce.getText();
+
+            //kiểm tra propertyID có tồn tại không ?
+            if (!controller.TransactionsController.checkExistPropertyID(propertyID)) {
+                JOptionPane.showMessageDialog(null, "PropertyID not exist !");
+                spinPropertyID.requestFocus();
+                return;
+            }
+            //kiểm tra CustomerID có tồn tại không ?
+            if (!controller.TransactionsController.checkExistCustomerID(customerID)) {
+                JOptionPane.showMessageDialog(null, "CustomerID not exist !");
+                spinCustomerID.requestFocus();
+                return;
+            }
+
+            String date;
+            try {
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                date = dateFormat.format(chooserDate.getDate());
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Not choose Date");
+                chooserDate.requestFocus();
+                return;
+            }
+            if (finalPrice.isEmpty() || finalPrice.length() > 20) {
+                JOptionPane.showMessageDialog(null, "Final price not be empty or more than 20 character!");
+                txtFinalFirce.requestFocus();
+                return;
+            }
+            try {
+                Integer.parseInt(finalPrice);
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Final price must be a number");
+                txtFinalFirce.requestFocus();
+                return;
+            }
+
+            int index = JOptionPane.showConfirmDialog(null, "Are you want to Update transaction ?", "Notification", JOptionPane.YES_NO_OPTION);
+            if (index == JOptionPane.YES_OPTION) {
+                controller.TransactionsController.updateTransaction(transactionID, propertyID, customerID, date, finalPrice);
+                btnRefreshActionPerformed(evt);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }//GEN-LAST:event_btnUpdateActionPerformed
+
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+        int transactionID = Integer.parseInt(txtTransactionID.getText());
+
+        int index = JOptionPane.showConfirmDialog(null, "Are you want to Delete transaction ?", "Notification", JOptionPane.YES_NO_OPTION);
+        if (index == JOptionPane.YES_OPTION) {
+            try {
+                controller.TransactionsController.deleteTransaction(transactionID);
+                btnRefreshActionPerformed(evt);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(panelTransactions.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                Logger.getLogger(panelTransactions.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_btnDeleteActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -380,11 +517,11 @@ public final class panelTransactions extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JSpinner spinCustomerID;
+    private javax.swing.JSpinner spinPropertyID;
     private javax.swing.JTable tblTransaction;
-    private javax.swing.JTextField txtCustomerID;
     private javax.swing.JTextField txtFinalFirce;
     private javax.swing.JTextField txtFind;
-    private javax.swing.JTextField txtPropertyID;
     private javax.swing.JTextField txtTransactionID;
     // End of variables declaration//GEN-END:variables
 }

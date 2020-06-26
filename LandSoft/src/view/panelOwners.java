@@ -505,13 +505,15 @@ public final class panelOwners extends javax.swing.JPanel {
             } else {
                 gender = false;
             }
-            //Birth day
-//            if (chooseDate.getDate()==null) {
-//                JOptionPane.showMessageDialog(null, "Please choose BirthDay !");
-//                return;
-//            }
-
-            //Email
+            String birthDay;
+            try {
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                birthDay = dateFormat.format(chooseDate.getDate());
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Not choose birthDay");
+                chooseDate.requestFocus();
+                return;
+            }
             if (email.isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Email not be empty !");
                 txtEmail.requestFocus();
@@ -563,9 +565,6 @@ public final class panelOwners extends javax.swing.JPanel {
                 txtAddress.requestFocus();
                 return;
             }
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-            String birthDay = dateFormat.format(chooseDate.getDate());
-
             int index = JOptionPane.showConfirmDialog(null, "Are you want to Add new Owner: " + firstName + " " + lastName + " ?", "Notification", JOptionPane.YES_NO_OPTION);
             if (index == JOptionPane.YES_OPTION) {
                 controller.OwnersController.addNewOwners(firstName, lastName, gender, birthDay, email, phoneNumber, address);
@@ -617,13 +616,15 @@ public final class panelOwners extends javax.swing.JPanel {
             } else {
                 gender = false;
             }
-            //Birth day
-//            if (chooseDate.getDate()==null) {
-//                JOptionPane.showMessageDialog(null, "Please choose BirthDay !");
-//                return;
-//            }
-
-            //Email
+            String birthDay;
+            try {
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                birthDay = dateFormat.format(chooseDate.getDate());
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Not choose birthDay");
+                chooseDate.requestFocus();
+                return;
+            }
             if (email.isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Email not be empty !");
                 txtEmail.requestFocus();
@@ -675,12 +676,10 @@ public final class panelOwners extends javax.swing.JPanel {
                 txtAddress.requestFocus();
                 return;
             }
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-            String birthDay = dateFormat.format(chooseDate.getDate());
-            Owners owners = new Owners(OwnerID, firstName, lastName, gender, birthDay, email, phoneNumber, address);
 
             int index = JOptionPane.showConfirmDialog(null, "Are you want to Update Owner: " + firstName + " " + lastName + " ?", "Notification", JOptionPane.YES_NO_OPTION);
             if (index == JOptionPane.YES_OPTION) {
+                Owners owners = new Owners(OwnerID, firstName, lastName, gender, birthDay, email, phoneNumber, address);
                 controller.OwnersController.updateOwner(owners);
                 btnRefreshActionPerformed(evt);
             }
@@ -697,7 +696,7 @@ public final class panelOwners extends javax.swing.JPanel {
             int OwnerID = Integer.parseInt(txtOwnerID.getText());
             String firstName = txtFirstName.getText();
             String lastName = txtLastName.getText();
-            
+
             int index = JOptionPane.showConfirmDialog(null, "Are you want to Delete Owner: " + firstName + " " + lastName + " ?", "Notification", JOptionPane.YES_NO_OPTION);
             if (index == JOptionPane.YES_OPTION) {
                 controller.OwnersController.deleteOwner(OwnerID);

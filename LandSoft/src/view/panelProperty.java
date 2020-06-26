@@ -607,7 +607,7 @@ public final class panelProperty extends javax.swing.JPanel {
         txtPrice.setText("");
         spinOwnerID.setValue(0);
         txtAddress.setText("");
-        spinBedrooms.setValue(0);
+        spinFloor.setValue(0);
         spinBedrooms.setValue(0);
         spinBathrooms.setValue(0);
         checkBalcony.setSelected(false);
