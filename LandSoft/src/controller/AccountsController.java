@@ -107,6 +107,7 @@ public class AccountsController {
         return ps.executeUpdate();
     }
 //Kiểm tra Username có tồn tại chưa, không tính Account đang chọn
+
     public static boolean checkExistUserNameOfAccountOrther(String userName, int accountID) throws ClassNotFoundException, SQLException {
         conn = controller.ConnectionSQL.connectSQLServer();
         sql = "select Username from Accounts where Username = ? and AccountID != ?";
@@ -124,6 +125,7 @@ public class AccountsController {
 
     }
 //Kiểm tra Email có tồn tại chưa, không tính Account đang chọn
+
     public static boolean checkExistEmailOfAccountOrther(String email, int accountID) throws ClassNotFoundException, SQLException {
         conn = controller.ConnectionSQL.connectSQLServer();
         sql = "select Email from Accounts where Email = ? and AccountID != ?";
@@ -141,6 +143,7 @@ public class AccountsController {
 
     }
 //Kiểm tra Phone number có tồn tại chưa, không tính Account đang chọn
+
     public static boolean checkExistPhoneNumberOfAccountOrther(String phoneNumber, int accountID) throws ClassNotFoundException, SQLException {
         conn = controller.ConnectionSQL.connectSQLServer();
         sql = "select PhoneNumber from Accounts where Email = ? and AccountID != ?";
@@ -223,19 +226,7 @@ public class AccountsController {
         return false;
     }
 
-    //Tạo Account mới
-    public static void signUpAccounts(String userName, String email, String phoneNumber, String password) throws ClassNotFoundException, SQLException, NoSuchAlgorithmException {
-        conn = controller.ConnectionSQL.connectSQLServer();
-        sql = "insert into Accounts(Username,Email,PhoneNumber,Password) values (?,?,?,?)";
-        ps = conn.prepareStatement(sql);
-        ps.setString(1, userName);
-        ps.setString(2, email);
-        ps.setString(3, phoneNumber);
-        ps.setString(4, MD5(password));//Password được mã hóa MD5
-        ps.executeUpdate();
-    }
-
-    //Kiểm tra Email có tồn tại và thuộc Username đang làm việc không ?
+    //Kiểm tra Email có tồn tại và thuộc Username đang chọn không ?
     public static boolean checkEmailBelongUsername(String userName, String email) throws ClassNotFoundException, SQLException, NoSuchAlgorithmException {
         conn = controller.ConnectionSQL.connectSQLServer();
         sql = "select Email from Accounts where Username = ? AND Email = ?";
@@ -261,6 +252,79 @@ public class AccountsController {
         ps.setString(2, userName);
         ps.setString(3, email);
         ps.executeUpdate();
+    }
+
+    //Lấy ra role name
+    public static List<String> getListRoleName() throws ClassNotFoundException, SQLException {
+        ArrayList<String> listRoleName = new ArrayList<>();
+        conn = controller.ConnectionSQL.connectSQLServer();
+        sql = "select RoleName from Role";
+        stmt = conn.createStatement();
+        rs = stmt.executeQuery(sql);
+        while (rs.next()) {
+            listRoleName.add(rs.getString("RoleName"));
+
+        }
+        return listRoleName;
+    }
+
+    //Kiểm tra accountID có tồn tại ?
+    public static boolean checkExistAccountID(int accountID) throws ClassNotFoundException, SQLException {
+        conn = controller.ConnectionSQL.connectSQLServer();
+        sql = "select AccountID  from Accounts where AccountID = ?";
+        ps = conn.prepareStatement(sql);
+        ps.setInt(1, accountID);
+        rs = ps.executeQuery();
+        while (rs.next()) {
+            rs.close();
+            ps.close();
+            conn.close();
+            return true;
+        }
+        return false;
+
+    }
+
+    //Lấy ra roleID dựa trên role name
+    public static int getRoleIDWithRoleName(String roleName) throws ClassNotFoundException, SQLException {
+        conn = controller.ConnectionSQL.connectSQLServer();
+        sql = "select RoleID from Role where RoleName = ?";
+        ps = conn.prepareStatement(sql);
+        ps.setString(1, roleName);
+        rs = ps.executeQuery();
+        int roleID = 0;
+        ArrayList<Integer> listRoleID = new ArrayList<>();
+        while (rs.next()) {
+            listRoleID.add(rs.getInt("RoleID"));
+            roleID = listRoleID.get(0);
+        }
+        return roleID;
+    }
+
+    //Lấy ra roleName dựa trên userName
+    public static String getRoleNameWithUserName(String userName) throws ClassNotFoundException, SQLException {
+        conn = controller.ConnectionSQL.connectSQLServer();
+        sql = "select RoleName from Role join Accounts on Role.RoleID = Accounts.RoleID where Accounts.Username = ?";
+        ps = conn.prepareStatement(sql);
+        ps.setString(1, userName);
+        rs = ps.executeQuery();
+        String roleName = "";
+        ArrayList<String> listRoleName = new ArrayList<>();
+        while (rs.next()) {
+            listRoleName.add(rs.getString("RoleName"));
+            roleName = listRoleName.get(0);
+        }
+        return roleName;
+    }
+
+    //Chèn role cho Account
+    public static int insertRoleIDToProperty(int roleID, int accountID) throws ClassNotFoundException, SQLException {
+        conn = controller.ConnectionSQL.connectSQLServer();
+        sql = "update Accounts set RoleID = ? where AccountID = ?";
+        ps = conn.prepareStatement(sql);
+        ps.setInt(1, roleID);
+        ps.setInt(2, accountID);
+        return ps.executeUpdate();
     }
 
 }

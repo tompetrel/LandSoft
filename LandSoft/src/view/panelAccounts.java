@@ -9,6 +9,11 @@ import java.awt.Image;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
@@ -37,6 +42,7 @@ public final class panelAccounts extends javax.swing.JPanel {
      * Creates new form panelAccounts
      */
     byte[] image = null;
+    File selectedPicture = null;
 
     void initTableAccounts() {
         try {
@@ -127,6 +133,35 @@ public final class panelAccounts extends javax.swing.JPanel {
         });
     }
 
+    void initGUIDialogRole() {
+        try {
+            cbbRole.removeAllItems();
+            List<String> listRoleName = controller.AccountsController.getListRoleName();
+            for (int i = 0; i < listRoleName.size(); i++) {
+                cbbRole.addItem(listRoleName.get(i));
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    void copyImageIntoLandSoft() {
+        try {
+            String dir = System.getProperty("user.dir");
+            dir = dir + "/images";
+            File file = new File(dir);
+            if (!file.exists()) {
+                file.mkdir();
+            }
+            dir += "/" + selectedPicture.getName();
+            Path copied = Paths.get(dir);
+            Path originalPath = Paths.get(selectedPicture.getAbsolutePath());
+            Files.copy(originalPath, copied, StandardCopyOption.REPLACE_EXISTING);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
     public panelAccounts() {
         initComponents();
         initTableAccounts();
@@ -145,6 +180,11 @@ public final class panelAccounts extends javax.swing.JPanel {
         buttonGroup1 = new javax.swing.ButtonGroup();
         dialogRole = new javax.swing.JDialog();
         jLabel12 = new javax.swing.JLabel();
+        spinAccountID = new javax.swing.JSpinner();
+        jLabel13 = new javax.swing.JLabel();
+        cbbRole = new javax.swing.JComboBox<>();
+        btnOK = new javax.swing.JButton();
+        btnBack = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblAccounts = new javax.swing.JTable();
@@ -182,7 +222,33 @@ public final class panelAccounts extends javax.swing.JPanel {
         btnRole = new javax.swing.JButton();
         txtPassword = new javax.swing.JTextField();
 
+        jLabel12.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel12.setText("AccountID:");
+
+        spinAccountID.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        spinAccountID.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
+
+        jLabel13.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel13.setText("Role:");
+
+        cbbRole.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        cbbRole.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        btnOK.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        btnOK.setText("OK");
+        btnOK.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnOKActionPerformed(evt);
+            }
+        });
+
+        btnBack.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        btnBack.setText("Back");
+        btnBack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBackActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout dialogRoleLayout = new javax.swing.GroupLayout(dialogRole.getContentPane());
         dialogRole.getContentPane().setLayout(dialogRoleLayout);
@@ -190,15 +256,35 @@ public final class panelAccounts extends javax.swing.JPanel {
             dialogRoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(dialogRoleLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel12)
-                .addContainerGap(336, Short.MAX_VALUE))
+                .addGroup(dialogRoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel12)
+                    .addComponent(jLabel13))
+                .addGap(18, 18, 18)
+                .addGroup(dialogRoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(dialogRoleLayout.createSequentialGroup()
+                        .addComponent(btnOK, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
+                        .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(spinAccountID)
+                    .addComponent(cbbRole, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(78, Short.MAX_VALUE))
         );
         dialogRoleLayout.setVerticalGroup(
             dialogRoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(dialogRoleLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel12)
-                .addContainerGap(275, Short.MAX_VALUE))
+                .addGroup(dialogRoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel12)
+                    .addComponent(spinAccountID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(dialogRoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel13)
+                    .addComponent(cbbRole, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(dialogRoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnOK)
+                    .addComponent(btnBack))
+                .addContainerGap(187, Short.MAX_VALUE))
         );
 
         setLayout(new java.awt.BorderLayout());
@@ -626,6 +712,7 @@ public final class panelAccounts extends javax.swing.JPanel {
             //Add new account
             int index = JOptionPane.showConfirmDialog(null, "Are you want to Add new Account ?", "Notification", JOptionPane.YES_NO_OPTION);
             if (index == JOptionPane.YES_OPTION) {
+                copyImageIntoLandSoft();
                 controller.AccountsController.addNewAccount(userName, firstName, lastName, gender, birthDay, email, phoneNumber, address, password, image);
                 btnRefreshActionPerformed(evt);
             }
@@ -681,8 +768,8 @@ public final class panelAccounts extends javax.swing.JPanel {
             chooser.setAcceptAllFileFilterUsed(true);
             int result = chooser.showOpenDialog(this);
             if (result == JFileChooser.APPROVE_OPTION) {
-                File file = chooser.getSelectedFile();
-                fileName = file.getAbsolutePath();
+                selectedPicture = chooser.getSelectedFile();
+                fileName = selectedPicture.getAbsolutePath();
                 ImageIcon icon = new ImageIcon(new ImageIcon(fileName).getImage().getScaledInstance(lblImage.getWidth(), lblImage.getHeight(), Image.SCALE_SMOOTH));
                 lblImage.setIcon(icon);
             }
@@ -827,26 +914,55 @@ public final class panelAccounts extends javax.swing.JPanel {
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void btnRoleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRoleActionPerformed
-        dialogRole.setSize(300, 200);
+        dialogRole.setSize(400, 200);
         dialogRole.setVisible(true);
         dialogRole.setLocationRelativeTo(null);
+        initGUIDialogRole();
     }//GEN-LAST:event_btnRoleActionPerformed
+
+    private void btnOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOKActionPerformed
+        try {
+            int accountID = Integer.parseInt(spinAccountID.getValue().toString());
+            if (!controller.AccountsController.checkExistAccountID(accountID)) {
+                JOptionPane.showMessageDialog(null, "Account not exist");
+                spinAccountID.requestFocus();
+                return;
+            }
+            int index = JOptionPane.showConfirmDialog(null, "Are you sure ?", "Notification", JOptionPane.YES_NO_OPTION);
+            if (index == JOptionPane.YES_OPTION) {
+                String roleName = cbbRole.getSelectedItem().toString();
+                int roleID = controller.AccountsController.getRoleIDWithRoleName(roleName);
+                controller.AccountsController.insertRoleIDToProperty(roleID, accountID);
+                btnRefreshActionPerformed(evt);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }//GEN-LAST:event_btnOKActionPerformed
+
+    private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
+        dialogRole.dispose();
+    }//GEN-LAST:event_btnBackActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdd;
+    private javax.swing.JButton btnBack;
     private javax.swing.JButton btnChooseImage;
     private javax.swing.JButton btnDelete;
+    private javax.swing.JButton btnOK;
     private javax.swing.JButton btnRefresh;
     private javax.swing.JButton btnRole;
     private javax.swing.JButton btnUpdate;
     private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JComboBox<String> cbbRole;
     private com.toedter.calendar.JDateChooser chooseBirthDay;
     private javax.swing.JDialog dialogRole;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -863,6 +979,7 @@ public final class panelAccounts extends javax.swing.JPanel {
     private javax.swing.JLabel lblImage;
     private javax.swing.JRadioButton radioFemale;
     private javax.swing.JRadioButton radioMale;
+    private javax.swing.JSpinner spinAccountID;
     private javax.swing.JTable tblAccounts;
     private javax.swing.JTextField txtAccountID;
     private javax.swing.JTextArea txtAddress;

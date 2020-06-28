@@ -7,7 +7,11 @@ package view;
 
 import java.awt.CardLayout;
 import java.awt.Color;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -19,25 +23,53 @@ public final class frmManagement extends javax.swing.JFrame {
      * Creates new form frmHome
      */
     void initGUIManagement() {
-        this.setSize(1200, 700);
-        this.setLocationRelativeTo(null);
+        try {
+            this.setSize(1200, 700);
+            this.setLocationRelativeTo(null);
 
-        panelContent.add(new panelProperty(), "panelProperty");
-        panelContent.add(new panelOwners(), "panelOwners");
-        panelContent.add(new panelCustomers(), "panelCustomers");
-        panelContent.add(new panelPropertysType(), "panelPropertysType");
-        panelContent.add(new panelPropertyImage(), "panelPropertyImage");
-        panelContent.add(new panelTransactions(), "panelTransactions");
-        panelContent.add(new panelAccounts(), "panelAccounts");
+            panelContent.add(new panelProperty(), "panelProperty");
+            panelContent.add(new panelOwners(), "panelOwners");
+            panelContent.add(new panelCustomers(), "panelCustomers");
+            panelContent.add(new panelPropertysType(), "panelPropertysType");
+            panelContent.add(new panelPropertyImage(), "panelPropertyImage");
+            panelContent.add(new panelTransactions(), "panelTransactions");
+            panelContent.add(new panelAccounts(), "panelAccounts");
+            //Icon title
+            ImageIcon icon = new ImageIcon(getClass().getResource("/image/icon_Login.png"));
+            this.setIconImage(icon.getImage());
 
-        //Icon title
-        ImageIcon icon = new ImageIcon(getClass().getResource("/image/icon_Login.png"));
-        this.setIconImage(icon.getImage());
+            //Lable Username
+            String userName = frmLogin.userName;
+            lblUsername.setText(userName);
+            //Lable Role
+            String roleName = controller.AccountsController.getRoleNameWithUserName(userName);
+            lblRoleName.setText(roleName);
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+    }
+
+    void role() {
+        if (lblRoleName.getText().equals("Administrator")) {
+            JOptionPane.showMessageDialog(null, "Hello Admin !");
+
+        } else if (lblRoleName.getText().equals("Standard User")) {
+
+            JOptionPane.showMessageDialog(null, "Hello User !");
+            lblAccounts.setVisible(false);
+        } else {
+            JOptionPane.showConfirmDialog(null, "No access to software yet", "Waring", JOptionPane.YES_OPTION);
+            System.exit(0);
+        }
     }
 
     public frmManagement() {
         initComponents();
         initGUIManagement();
+//        role();
+
     }
 
     /**
@@ -51,8 +83,12 @@ public final class frmManagement extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jSeparator1 = new javax.swing.JSeparator();
-        jLabel1 = new javax.swing.JLabel();
         btnLogOut = new javax.swing.JButton();
+        btnChangePassword = new javax.swing.JButton();
+        lblRoleName = new javax.swing.JLabel();
+        lblUsername = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         lblPropertys = new javax.swing.JLabel();
         lblOwners = new javax.swing.JLabel();
@@ -72,9 +108,6 @@ public final class frmManagement extends javax.swing.JFrame {
 
         jSeparator1.setForeground(new java.awt.Color(153, 153, 153));
 
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/logo-Home.png"))); // NOI18N
-
         btnLogOut.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/icon_logout.png"))); // NOI18N
         btnLogOut.setText("Log Out");
         btnLogOut.addActionListener(new java.awt.event.ActionListener() {
@@ -83,14 +116,33 @@ public final class frmManagement extends javax.swing.JFrame {
             }
         });
 
+        btnChangePassword.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/icon_changePassword.png"))); // NOI18N
+        btnChangePassword.setText("Change Password");
+
+        lblRoleName.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+
+        lblUsername.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+
+        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel4.setText("Xin chào ");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jSeparator1)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 1127, Short.MAX_VALUE)
+                .addGap(0, 765, Short.MAX_VALUE)
+                .addComponent(jLabel2)
+                .addGap(223, 223, 223)
+                .addComponent(jLabel4)
+                .addGap(18, 18, 18)
+                .addComponent(lblUsername)
+                .addGap(18, 18, 18)
+                .addComponent(lblRoleName)
+                .addGap(18, 18, 18)
+                .addComponent(btnChangePassword)
+                .addGap(18, 18, 18)
                 .addComponent(btnLogOut)
                 .addContainerGap())
         );
@@ -98,14 +150,15 @@ public final class frmManagement extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 2, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(1, 1, 1)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 77, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnLogOut)
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnLogOut)
+                    .addComponent(btnChangePassword)
+                    .addComponent(lblRoleName)
+                    .addComponent(lblUsername)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel2))
+                .addGap(0, 34, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.PAGE_START);
@@ -445,8 +498,10 @@ public final class frmManagement extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnChangePassword;
     private javax.swing.JButton btnLogOut;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JSeparator jSeparator1;
@@ -456,7 +511,9 @@ public final class frmManagement extends javax.swing.JFrame {
     private javax.swing.JLabel lblPropertyImage;
     private javax.swing.JLabel lblPropertys;
     private javax.swing.JLabel lblPropertysType;
+    private javax.swing.JLabel lblRoleName;
     private javax.swing.JLabel lblTransactions;
+    private javax.swing.JLabel lblUsername;
     private javax.swing.JPanel panelContent;
     // End of variables declaration//GEN-END:variables
 }

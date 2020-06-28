@@ -5,11 +5,23 @@
  */
 package view;
 
+import java.awt.Image;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
@@ -20,11 +32,31 @@ public final class dialogSignUp extends javax.swing.JDialog {
     /**
      * Creates new form dialogSignUp
      */
+    byte[] image = null;
+    File selectedPicture = null;
+
     void initGUISignUp() {
-        this.setSize(420, 600);
+        this.setSize(600, 500);
         this.setLocationRelativeTo(null);
         this.setResizable(false);
 
+    }
+
+    void copyImageIntoLandSoft() {
+        try {
+            String dir = System.getProperty("user.dir");
+            dir = dir + "/images";
+            File file = new File(dir);
+            if (!file.exists()) {
+                file.mkdir();
+            }
+            dir = dir + "/" + selectedPicture.getName();
+            Path copied = Paths.get(dir);
+            Path originalPath = Paths.get(selectedPicture.getAbsolutePath());
+            Files.copy(originalPath, copied, StandardCopyOption.REPLACE_EXISTING);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
     public dialogSignUp(java.awt.Frame parent, boolean modal) {
@@ -42,59 +74,128 @@ public final class dialogSignUp extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel3 = new javax.swing.JPanel();
-        jSeparator1 = new javax.swing.JSeparator();
-        jLabel1 = new javax.swing.JLabel();
+        buttonGroup1 = new javax.swing.ButtonGroup();
+        jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
         txtUsername = new javax.swing.JTextField();
-        txtEmail = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
+        txtFirstName = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        txtPhoneNumber = new javax.swing.JTextField();
+        txtLastName = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        txtPassword = new javax.swing.JPasswordField();
-        checkShowPassword = new javax.swing.JCheckBox();
+        radioMale = new javax.swing.JRadioButton();
+        radioFemale = new javax.swing.JRadioButton();
+        jLabel6 = new javax.swing.JLabel();
+        chooseBirthDay = new com.toedter.calendar.JDateChooser();
+        jLabel7 = new javax.swing.JLabel();
+        txtEmail = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
+        txtPhoneNumber = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
+        txtPassword = new javax.swing.JTextField();
+        jLabel10 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        txtAddress = new javax.swing.JTextArea();
+        jLabel11 = new javax.swing.JLabel();
+        lblImage = new javax.swing.JLabel();
+        btnChooseImage = new javax.swing.JButton();
         btnSignUp = new javax.swing.JButton();
         btnBack = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel2.setBackground(new java.awt.Color(0, 102, 255));
+        jLabel2.setFont(new java.awt.Font("Unispace", 1, 24)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("Sign Up");
+        jLabel2.setOpaque(true);
 
-        jLabel1.setFont(new java.awt.Font("Unispace", 0, 24)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(51, 102, 255));
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Sign Up");
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 600, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 51, Short.MAX_VALUE)
+        );
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel2.setText("Username:");
+        getContentPane().add(jPanel1, java.awt.BorderLayout.PAGE_START);
 
-        txtUsername.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel1.setText("UserName:");
 
-        txtEmail.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtUsername.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel3.setText("Email:");
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel3.setText("First name:");
 
-        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel4.setText("Phone number:");
+        txtFirstName.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
-        txtPhoneNumber.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel4.setText("Last name:");
 
-        jLabel5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel5.setText("Password:");
+        txtLastName.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
-        txtPassword.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel5.setText("Gender:");
 
-        checkShowPassword.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        checkShowPassword.setText("Show password");
-        checkShowPassword.addActionListener(new java.awt.event.ActionListener() {
+        buttonGroup1.add(radioMale);
+        radioMale.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        radioMale.setText("Male");
+
+        buttonGroup1.add(radioFemale);
+        radioFemale.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        radioFemale.setText("Female");
+
+        jLabel6.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel6.setText("Birth Day:");
+
+        chooseBirthDay.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+
+        jLabel7.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel7.setText("Email:");
+
+        txtEmail.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+
+        jLabel8.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel8.setText("Phone:");
+
+        txtPhoneNumber.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+
+        jLabel9.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel9.setText("Password:");
+
+        txtPassword.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+
+        jLabel10.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel10.setText("Address:");
+
+        txtAddress.setColumns(20);
+        txtAddress.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        txtAddress.setLineWrap(true);
+        txtAddress.setRows(5);
+        jScrollPane1.setViewportView(txtAddress);
+
+        jLabel11.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel11.setText("Image:");
+
+        lblImage.setBackground(new java.awt.Color(255, 255, 255));
+        lblImage.setOpaque(true);
+
+        btnChooseImage.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        btnChooseImage.setText("Choose Image");
+        btnChooseImage.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                checkShowPasswordActionPerformed(evt);
+                btnChooseImageActionPerformed(evt);
             }
         });
 
-        btnSignUp.setBackground(new java.awt.Color(51, 102, 255));
+        btnSignUp.setBackground(new java.awt.Color(51, 51, 255));
         btnSignUp.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
         btnSignUp.setForeground(new java.awt.Color(255, 255, 255));
         btnSignUp.setText("Sign Up");
@@ -104,95 +205,179 @@ public final class dialogSignUp extends javax.swing.JDialog {
             }
         });
 
-        btnBack.setBackground(new java.awt.Color(204, 204, 204));
-        btnBack.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
+        btnBack.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnBack.setForeground(new java.awt.Color(51, 51, 51));
-        btnBack.setText("Back");
+        btnBack.setText("Back to Login");
         btnBack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBackActionPerformed(evt);
             }
         });
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jSeparator1)
-            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(50, 50, 50)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(checkShowPassword)
-                    .addComponent(jLabel2)
-                    .addComponent(txtUsername)
-                    .addComponent(txtEmail, javax.swing.GroupLayout.DEFAULT_SIZE, 328, Short.MAX_VALUE)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel4)
-                    .addComponent(txtPhoneNumber, javax.swing.GroupLayout.DEFAULT_SIZE, 328, Short.MAX_VALUE)
-                    .addComponent(jLabel5)
-                    .addComponent(txtPassword)
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtFirstName))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel8)
+                            .addComponent(jLabel9))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(radioMale)
+                                .addGap(18, 18, 18)
+                                .addComponent(radioFemale)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(txtLastName)
+                            .addComponent(chooseBirthDay, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtEmail)
+                            .addComponent(txtPhoneNumber)
+                            .addComponent(txtPassword))))
+                .addGap(67, 67, 67)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel10)
+                    .addComponent(jLabel11))
+                .addGap(18, 18, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addComponent(lblImage, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnChooseImage))
+                .addGap(21, 21, 21))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(135, 135, 135)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnSignUp, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnBack, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(52, Short.MAX_VALUE))
+                    .addComponent(btnBack, javax.swing.GroupLayout.DEFAULT_SIZE, 330, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(25, 25, 25)
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(25, 25, 25)
-                .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(txtPhoneNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(25, 25, 25)
-                .addComponent(jLabel5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(checkShowPassword)
-                .addGap(40, 40, 40)
-                .addComponent(btnSignUp, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel1)
+                                    .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel3)
+                                    .addComponent(txtFirstName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel4)
+                                    .addComponent(txtLastName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel5)
+                                    .addComponent(radioMale)
+                                    .addComponent(radioFemale))
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel6)
+                                    .addComponent(chooseBirthDay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel7)
+                                    .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel8)
+                                    .addComponent(txtPhoneNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(5, 5, 5)
+                                .addComponent(lblImage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel9)
+                            .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnChooseImage)))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel10)
+                        .addGap(103, 103, 103)
+                        .addComponent(jLabel11)))
+                .addGap(18, 18, 18)
+                .addComponent(btnSignUp, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnBack)
-                .addGap(0, 138, Short.MAX_VALUE))
+                .addGap(37, 37, 37))
         );
 
-        getContentPane().add(jPanel3, java.awt.BorderLayout.CENTER);
+        getContentPane().add(jPanel2, java.awt.BorderLayout.CENTER);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_btnBackActionPerformed
+
     private void btnSignUpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSignUpActionPerformed
         try {
             String userName = txtUsername.getText();
+            String firstName = txtFirstName.getText();
+            String lastName = txtLastName.getText();
+            boolean gender = false;
+            String birthDay;
             String email = txtEmail.getText();
             String phoneNumber = txtPhoneNumber.getText();
+            String address = txtAddress.getText();
             String password = txtPassword.getText();
-            //Kiểm tra nhập liệu
-            //Username
-            if (userName.isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Username not be empty !");
-                txtUsername.requestFocus();
-                return;
-            }
-            if (userName.length() > 20) {
-                JOptionPane.showMessageDialog(null, "Username no more than 20 characters !");
+            if (userName.isEmpty() || userName.length() > 20) {
+                JOptionPane.showMessageDialog(null, "Username not be empty or more than 20 character");
                 txtUsername.requestFocus();
                 return;
             }
             if (controller.AccountsController.checkExistUserName(userName)) {
-                JOptionPane.showMessageDialog(null, "Username " + userName + " exist !");
+                JOptionPane.showMessageDialog(null, "Username existed");
                 txtUsername.requestFocus();
+                return;
+            }
+            //first name, last name
+            if (firstName.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "First name not be empty");
+                txtFirstName.requestFocus();
+                return;
+            }
+            if (lastName.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Last name not be empty");
+                txtLastName.requestFocus();
+                return;
+            }
+            //Gender
+            if (radioMale.isSelected()) {
+                gender = true;
+            } else {
+                gender = false;
+            }
+            //Birth Day
+            try {
+                birthDay = new SimpleDateFormat("yyyy-MM-dd").format(chooseBirthDay.getDate());
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Not choose birthDay");
+                chooseBirthDay.requestFocus();
                 return;
             }
             //Email
@@ -201,18 +386,13 @@ public final class dialogSignUp extends javax.swing.JDialog {
                 txtEmail.requestFocus();
                 return;
             }
-            if (email.length() > 30) {
-                JOptionPane.showMessageDialog(null, "Email no more than 50 characters !");
-                txtEmail.requestFocus();
-                return;
-            }
             if (!email.matches("^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$")) {
-                JOptionPane.showMessageDialog(null, "Email:  " + email + "  illegal. Exemple: ABC@gmail.com");
+                JOptionPane.showMessageDialog(null, "Email:  " + email + "  invalid. Exemple: ABC@gmail.com");
                 txtEmail.requestFocus();
                 return;
             }
             if (controller.AccountsController.checkExistEmail(email)) {
-                JOptionPane.showMessageDialog(null, "Email " + email + " exist !");
+                JOptionPane.showMessageDialog(null, "Email existed");
                 txtEmail.requestFocus();
                 return;
             }
@@ -228,51 +408,74 @@ public final class dialogSignUp extends javax.swing.JDialog {
                 return;
             }
             if (!phoneNumber.matches("0\\d\\d\\d\\d\\d\\d\\d\\d\\d")) {
-                JOptionPane.showMessageDialog(null, "Phone number:  " + phoneNumber + "  illegal. Exemple: 0123456789");
+                JOptionPane.showMessageDialog(null, "Phone number:  " + phoneNumber + "  invalid. Exemple: 0123456789");
                 txtPhoneNumber.requestFocus();
                 return;
             }
             if (controller.AccountsController.checkExistPhoneNumber(phoneNumber)) {
-                JOptionPane.showMessageDialog(null, "Phone number " + phoneNumber + " exist !");
+                JOptionPane.showMessageDialog(null, "Phone number existed");
                 txtPhoneNumber.requestFocus();
                 return;
             }
+            //Address
+            if (address.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Address not be empty !");
+                txtAddress.requestFocus();
+                return;
+            }
             //Password
-            if (password.isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Password not be empty !");
+            if (password.isEmpty() || password.length() > 20) {
+                JOptionPane.showMessageDialog(null, "Password not be empty or more than 20 character");
                 txtPassword.requestFocus();
                 return;
             }
-            if (password.length() > 20) {
-                JOptionPane.showMessageDialog(null, "Password no more than 20 characters !");
-                txtPassword.requestFocus();
-                txtPassword.setText("");
+            //Image
+            if (image == null) {
+                JOptionPane.showMessageDialog(null, "Choose Image");
                 return;
             }
-            controller.AccountsController.signUpAccounts(userName, email, phoneNumber, password);
-            JOptionPane.showMessageDialog(null, "Sign up Successfully !");
-            this.dispose();
+            //Sign up account
+            int index = JOptionPane.showConfirmDialog(null, "Are you want to sign up Account ?", "Notification", JOptionPane.YES_NO_OPTION);
+            if (index == JOptionPane.YES_OPTION) {
+                copyImageIntoLandSoft();
+                controller.AccountsController.addNewAccount(userName, firstName, lastName, gender, birthDay, email, phoneNumber, address, password, image);
+                JOptionPane.showMessageDialog(null, "Sign up successfully");
+                this.dispose();
+            }
 
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(dialogSignUp.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(dialogSignUp.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (NoSuchAlgorithmException ex) {
-            Logger.getLogger(dialogSignUp.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }//GEN-LAST:event_btnSignUpActionPerformed
 
-    private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
-        this.dispose();
-    }//GEN-LAST:event_btnBackActionPerformed
-
-    private void checkShowPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkShowPasswordActionPerformed
-        if (checkShowPassword.isSelected()) {
-            txtPassword.setEchoChar((char) 0);
-        } else {
-            txtPassword.setEchoChar('*');
+    private void btnChooseImageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChooseImageActionPerformed
+        try {
+            String fileName = null;
+            JFileChooser chooser = new JFileChooser();
+            chooser.setCurrentDirectory(new File(System.getProperty("user.home")));
+            chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+            chooser.addChoosableFileFilter(new FileNameExtensionFilter("Images", "jpg", "png", "gif", "bmp"));
+            chooser.setAcceptAllFileFilterUsed(true);
+            int result = chooser.showOpenDialog(this);
+            if (result == JFileChooser.APPROVE_OPTION) {
+                selectedPicture = chooser.getSelectedFile();
+                fileName = selectedPicture.getAbsolutePath();
+                ImageIcon icon = new ImageIcon(new ImageIcon(fileName).getImage().getScaledInstance(lblImage.getWidth(), lblImage.getHeight(), Image.SCALE_SMOOTH));
+                lblImage.setIcon(icon);
+            }
+            File img = new File(fileName);
+            FileInputStream fis = new FileInputStream(img);
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            byte[] b = new byte[1024];
+            int bytesRead;
+            while ((bytesRead = fis.read(b)) != -1) {
+                bos.write(b);
+            }
+            image = bos.toByteArray();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-    }//GEN-LAST:event_checkShowPasswordActionPerformed
+    }//GEN-LAST:event_btnChooseImageActionPerformed
 
     /**
      * @param args the command line arguments
@@ -318,17 +521,32 @@ public final class dialogSignUp extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBack;
+    private javax.swing.JButton btnChooseImage;
     private javax.swing.JButton btnSignUp;
-    private javax.swing.JCheckBox checkShowPassword;
+    private javax.swing.ButtonGroup buttonGroup1;
+    private com.toedter.calendar.JDateChooser chooseBirthDay;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblImage;
+    private javax.swing.JRadioButton radioFemale;
+    private javax.swing.JRadioButton radioMale;
+    private javax.swing.JTextArea txtAddress;
     private javax.swing.JTextField txtEmail;
-    private javax.swing.JPasswordField txtPassword;
+    private javax.swing.JTextField txtFirstName;
+    private javax.swing.JTextField txtLastName;
+    private javax.swing.JTextField txtPassword;
     private javax.swing.JTextField txtPhoneNumber;
     private javax.swing.JTextField txtUsername;
     // End of variables declaration//GEN-END:variables

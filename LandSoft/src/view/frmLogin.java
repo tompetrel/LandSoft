@@ -16,6 +16,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import javax.swing.border.Border;
 
 /**
@@ -28,6 +29,7 @@ public final class frmLogin extends javax.swing.JFrame {
      * Creates new form frmLogin
      */
     static int xx, yy;
+    static String userName;
 
     void initGUILogIn() {
         this.setSize(390, 500);
@@ -290,7 +292,7 @@ public final class frmLogin extends javax.swing.JFrame {
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         try {
-            String userName = txtUsername.getText();
+            userName = txtUsername.getText();
             String password = txtPassword.getText();
             //Kiểm tra nhập liệu
             //Username
