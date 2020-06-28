@@ -9,12 +9,10 @@ import java.awt.Image;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -773,6 +771,9 @@ public final class panelAccounts extends javax.swing.JPanel {
                 ImageIcon icon = new ImageIcon(new ImageIcon(fileName).getImage().getScaledInstance(lblImage.getWidth(), lblImage.getHeight(), Image.SCALE_SMOOTH));
                 lblImage.setIcon(icon);
             }
+            if (result == JFileChooser.CANCEL_OPTION) {
+                return;
+            }
             File img = new File(fileName);
             FileInputStream fis = new FileInputStream(img);
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
@@ -932,7 +933,7 @@ public final class panelAccounts extends javax.swing.JPanel {
             if (index == JOptionPane.YES_OPTION) {
                 String roleName = cbbRole.getSelectedItem().toString();
                 int roleID = controller.AccountsController.getRoleIDWithRoleName(roleName);
-                controller.AccountsController.insertRoleIDToProperty(roleID, accountID);
+                controller.AccountsController.insertRoleIDToAccount(roleID, accountID);
                 btnRefreshActionPerformed(evt);
             }
         } catch (Exception ex) {

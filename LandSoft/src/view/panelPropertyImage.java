@@ -399,6 +399,9 @@ public final class panelPropertyImage extends javax.swing.JPanel {
                 ImageIcon icon = new ImageIcon(new ImageIcon(fileName).getImage().getScaledInstance(lblImage.getWidth(), lblImage.getHeight(), Image.SCALE_SMOOTH));
                 lblImage.setIcon(icon);
             }
+            if(result == JFileChooser.CANCEL_OPTION){
+                return;
+            }
 
             File img = new File(fileName);
             FileInputStream fis = new FileInputStream(img);

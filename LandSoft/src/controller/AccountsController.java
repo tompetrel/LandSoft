@@ -318,13 +318,41 @@ public class AccountsController {
     }
 
     //Chèn role cho Account
-    public static int insertRoleIDToProperty(int roleID, int accountID) throws ClassNotFoundException, SQLException {
+    public static int insertRoleIDToAccount(int roleID, int accountID) throws ClassNotFoundException, SQLException {
         conn = controller.ConnectionSQL.connectSQLServer();
         sql = "update Accounts set RoleID = ? where AccountID = ?";
         ps = conn.prepareStatement(sql);
         ps.setInt(1, roleID);
         ps.setInt(2, accountID);
         return ps.executeUpdate();
+    }
+//    //Hàm lấy ra accoutID với username
+//    public static int getAccountID(String userName) throws ClassNotFoundException, SQLException {
+//        conn = controller.ConnectionSQL.connectSQLServer();
+//        sql = "select AccountID from Accounts where Username = ?";
+//        ps = conn.prepareStatement(sql);
+//        ps.setString(1, userName);
+//        rs = ps.executeQuery();
+//    }
+
+    //Với accountID = 1 thì roleID của account đó cũng là 1
+    public static void insertRoleAdmin() throws ClassNotFoundException, SQLException {
+        conn = controller.ConnectionSQL.connectSQLServer();
+        int index = 1;
+        sql = "update Accounts set RoleID = 1 where AccountID = ?";
+        ps = conn.prepareStatement(sql);
+        ps.setInt(1, index);
+        ps.executeUpdate();
+    }
+
+    //Với account chưa được cấp quyền thì mặc định là standard user
+    public static void insertRoleDefault() throws ClassNotFoundException, SQLException {
+        conn = controller.ConnectionSQL.connectSQLServer();
+        int index = 1;
+        sql = "update Accounts set RoleID = 2 where AccountID != ?";
+        ps = conn.prepareStatement(sql);
+        ps.setInt(1, index);
+        ps.executeUpdate();
     }
 
 }

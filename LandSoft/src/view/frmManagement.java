@@ -7,9 +7,6 @@ package view;
 
 import java.awt.CardLayout;
 import java.awt.Color;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
@@ -22,6 +19,15 @@ public final class frmManagement extends javax.swing.JFrame {
     /**
      * Creates new form frmHome
      */
+    void roleAdmin() {
+        try {
+            //Account đầu tiên cấp quyền admin
+            controller.AccountsController.insertRoleAdmin();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     void initGUIManagement() {
         try {
             this.setSize(1200, 700);
@@ -41,9 +47,19 @@ public final class frmManagement extends javax.swing.JFrame {
             //Lable Username
             String userName = frmLogin.userName;
             lblUsername.setText(userName);
-            //Lable Role
+            //Lable Role name
             String roleName = controller.AccountsController.getRoleNameWithUserName(userName);
             lblRoleName.setText(roleName);
+
+            switch (roleName) {
+                case "Administrator":
+                    JOptionPane.showMessageDialog(null, "Hello " + userName);
+                    break;
+                default:
+                    JOptionPane.showMessageDialog(null, "Hello " + userName);
+                    this.lblAccounts.setVisible(false);
+                    break;
+            }
 
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -51,25 +67,10 @@ public final class frmManagement extends javax.swing.JFrame {
 
     }
 
-    void role() {
-        if (lblRoleName.getText().equals("Administrator")) {
-            JOptionPane.showMessageDialog(null, "Hello Admin !");
-
-        } else if (lblRoleName.getText().equals("Standard User")) {
-
-            JOptionPane.showMessageDialog(null, "Hello User !");
-            lblAccounts.setVisible(false);
-        } else {
-            JOptionPane.showConfirmDialog(null, "No access to software yet", "Waring", JOptionPane.YES_OPTION);
-            System.exit(0);
-        }
-    }
-
     public frmManagement() {
         initComponents();
         initGUIManagement();
-//        role();
-
+        roleAdmin();
     }
 
     /**
@@ -88,7 +89,7 @@ public final class frmManagement extends javax.swing.JFrame {
         lblRoleName = new javax.swing.JLabel();
         lblUsername = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         lblPropertys = new javax.swing.JLabel();
         lblOwners = new javax.swing.JLabel();
@@ -118,6 +119,11 @@ public final class frmManagement extends javax.swing.JFrame {
 
         btnChangePassword.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/icon_changePassword.png"))); // NOI18N
         btnChangePassword.setText("Change Password");
+        btnChangePassword.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnChangePasswordActionPerformed(evt);
+            }
+        });
 
         lblRoleName.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
@@ -126,15 +132,18 @@ public final class frmManagement extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel4.setText("Xin chào ");
 
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/logo-Home.png"))); // NOI18N
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jSeparator1)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(0, 765, Short.MAX_VALUE)
-                .addComponent(jLabel2)
-                .addGap(223, 223, 223)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSeparator1))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(0, 927, Short.MAX_VALUE)
                 .addComponent(jLabel4)
                 .addGap(18, 18, 18)
                 .addComponent(lblUsername)
@@ -149,16 +158,18 @@ public final class frmManagement extends javax.swing.JFrame {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 2, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnLogOut)
-                    .addComponent(btnChangePassword)
-                    .addComponent(lblRoleName)
-                    .addComponent(lblUsername)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel2))
-                .addGap(0, 34, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 2, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnLogOut)
+                            .addComponent(btnChangePassword)
+                            .addComponent(lblRoleName)
+                            .addComponent(lblUsername)
+                            .addComponent(jLabel4)))
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.PAGE_START);
@@ -461,6 +472,10 @@ public final class frmManagement extends javax.swing.JFrame {
         lblAccounts.setBackground(new Color(102, 102, 102));
     }//GEN-LAST:event_lblAccountsMouseExited
 
+    private void btnChangePasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChangePasswordActionPerformed
+        new dialogForgotPassword(this, true).setVisible(true);
+    }//GEN-LAST:event_btnChangePasswordActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -500,7 +515,7 @@ public final class frmManagement extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnChangePassword;
     private javax.swing.JButton btnLogOut;
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
