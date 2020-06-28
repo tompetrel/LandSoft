@@ -202,7 +202,7 @@ public final class dialogSignUp extends javax.swing.JDialog {
                 return;
             }
             if (email.length() > 30) {
-                JOptionPane.showMessageDialog(null, "Email no more than 30 characters !");
+                JOptionPane.showMessageDialog(null, "Email no more than 50 characters !");
                 txtEmail.requestFocus();
                 return;
             }

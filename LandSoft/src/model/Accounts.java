@@ -22,12 +22,12 @@ public class Accounts {
     private String address;
     private String password;
     private byte[] image;
-    private String description;
+    private String roleID;
 
     public Accounts() {
     }
 
-    public Accounts(int accountID, String userName, String firstName, String lastName, boolean gender, String birthDay, String email, String phoneNumber, String address, String password, byte[] image, String description) {
+    public Accounts(int accountID, String userName, String firstName, String lastName, boolean gender, String birthDay, String email, String phoneNumber, String address, String password, byte[] image, String roleID) {
         this.accountID = accountID;
         this.userName = userName;
         this.firstName = firstName;
@@ -39,7 +39,7 @@ public class Accounts {
         this.address = address;
         this.password = password;
         this.image = image;
-        this.description = description;
+        this.roleID = roleID;
     }
 
     public int getAccountID() {
@@ -130,12 +130,12 @@ public class Accounts {
         this.image = image;
     }
 
-    public String getDescription() {
-        return description;
+    public String getRoleID() {
+        return roleID;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setRoleID(String roleID) {
+        this.roleID = roleID;
     }
 
 }

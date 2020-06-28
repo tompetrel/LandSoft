@@ -8,6 +8,9 @@ package controller;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+import model.Accounts;
 
 /**
  *
@@ -33,10 +36,132 @@ public class AccountsController {
         return sb.toString();
     }
 
+    public static List<Accounts> getListAccounts() throws ClassNotFoundException, SQLException {
+        ArrayList<Accounts> arrList = new ArrayList<>();
+        conn = controller.ConnectionSQL.connectSQLServer();
+        sql = "SELECT [AccountID]\n"
+                + "      ,[Username]\n"
+                + "      ,[FirstName]\n"
+                + "      ,[LastName]\n"
+                + "      ,[Gender]\n"
+                + "      ,[BirthDay]\n"
+                + "      ,[Email]\n"
+                + "      ,[PhoneNumber]\n"
+                + "      ,[Address]\n"
+                + "      ,[Password]\n"
+                + "      ,[Image]\n"
+                + "      ,[RoleID]\n"
+                + "  FROM [dbo].[Accounts] order by AccountID";
+        stmt = conn.createStatement();
+        rs = stmt.executeQuery(sql);
+        while (rs.next()) {
+            Accounts accounts = new Accounts(rs.getInt("AccountID"), rs.getString("Username"), rs.getString("FirstName"), rs.getString("LastName"), rs.getBoolean("Gender"), rs.getString("BirthDay"), rs.getString("Email"), rs.getString("PhoneNumber"), rs.getString("Address"), rs.getString("Password"), rs.getBytes("Image"), rs.getString("RoleID"));
+            arrList.add(accounts);
+        }
+        return arrList;
+    }
+
+//ADD
+    public static int addNewAccount(String userName, String firstName, String lastName, boolean gender, String birthDay, String email, String phoneNumber, String address, String password, byte[] image) throws ClassNotFoundException, SQLException, NoSuchAlgorithmException {
+        conn = controller.ConnectionSQL.connectSQLServer();
+        sql = "insert into Accounts(Username,FirstName,LastName,Gender,BirthDay,Email,PhoneNumber,Address,Password,Image)values(?,?,?,?,?,?,?,?,?,?)";
+        ps = conn.prepareStatement(sql);
+        ps.setString(1, userName);
+        ps.setString(2, firstName);
+        ps.setString(3, lastName);
+        ps.setBoolean(4, gender);
+        ps.setString(5, birthDay);
+        ps.setString(6, email);
+        ps.setString(7, phoneNumber);
+        ps.setString(8, address);
+        ps.setString(9, MD5(password));
+        ps.setBytes(10, image);
+        return ps.executeUpdate();
+    }
+
+    //Update
+    public static int updateAccount(String userName, String firstName, String lastName, boolean gender, String birthDay, String email, String phoneNumber, String address, String password, byte[] image, int accountID) throws ClassNotFoundException, SQLException, NoSuchAlgorithmException {
+        conn = controller.ConnectionSQL.connectSQLServer();
+        sql = "update Accounts set Username=?, FirstName=?,LastName=?,Gender=?,BirthDay=?,Email=?,PhoneNumber=?,Address=?,Password=?,Image=? where AccountID = ?";
+        ps = conn.prepareStatement(sql);
+        ps.setString(1, userName);
+        ps.setString(2, firstName);
+        ps.setString(3, lastName);
+        ps.setBoolean(4, gender);
+        ps.setString(5, birthDay);
+        ps.setString(6, email);
+        ps.setString(7, phoneNumber);
+        ps.setString(8, address);
+        ps.setString(9, MD5(password));
+        ps.setBytes(10, image);
+        ps.setInt(11, accountID);
+        return ps.executeUpdate();
+    }
+
+    //Delete
+    public static int deleteAccount(int accountID) throws ClassNotFoundException, SQLException {
+        conn = controller.ConnectionSQL.connectSQLServer();
+        sql = "delete Accounts where AccountID = ?";
+        ps = conn.prepareStatement(sql);
+        ps.setInt(1, accountID);
+        return ps.executeUpdate();
+    }
+//Kiểm tra Username có tồn tại chưa, không tính Account đang chọn
+    public static boolean checkExistUserNameOfAccountOrther(String userName, int accountID) throws ClassNotFoundException, SQLException {
+        conn = controller.ConnectionSQL.connectSQLServer();
+        sql = "select Username from Accounts where Username = ? and AccountID != ?";
+        ps = conn.prepareStatement(sql);
+        ps.setString(1, userName);
+        ps.setInt(2, accountID);
+        rs = ps.executeQuery();
+        while (rs.next()) {
+            rs.close();
+            ps.close();
+            conn.close();
+            return true;
+        }
+        return false;
+
+    }
+//Kiểm tra Email có tồn tại chưa, không tính Account đang chọn
+    public static boolean checkExistEmailOfAccountOrther(String email, int accountID) throws ClassNotFoundException, SQLException {
+        conn = controller.ConnectionSQL.connectSQLServer();
+        sql = "select Email from Accounts where Email = ? and AccountID != ?";
+        ps = conn.prepareStatement(sql);
+        ps.setString(1, email);
+        ps.setInt(2, accountID);
+        rs = ps.executeQuery();
+        while (rs.next()) {
+            rs.close();
+            ps.close();
+            conn.close();
+            return true;
+        }
+        return false;
+
+    }
+//Kiểm tra Phone number có tồn tại chưa, không tính Account đang chọn
+    public static boolean checkExistPhoneNumberOfAccountOrther(String phoneNumber, int accountID) throws ClassNotFoundException, SQLException {
+        conn = controller.ConnectionSQL.connectSQLServer();
+        sql = "select PhoneNumber from Accounts where Email = ? and AccountID != ?";
+        ps = conn.prepareStatement(sql);
+        ps.setString(1, phoneNumber);
+        ps.setInt(2, accountID);
+        rs = ps.executeQuery();
+        while (rs.next()) {
+            rs.close();
+            ps.close();
+            conn.close();
+            return true;
+        }
+        return false;
+
+    }
+
     //Kiểm tra Username và Password có đúng không ?
     public static boolean checkLoginAccounts(String userName, String password) throws ClassNotFoundException, SQLException, NoSuchAlgorithmException {
         conn = controller.ConnectionSQL.connectSQLServer();
-        sql = "select UserName, Password from Accounts where UserName = ? AND Password = ?";
+        sql = "select Username, Password from Accounts where Username = ? AND Password = ?";
         ps = conn.prepareStatement(sql);
         ps.setString(1, userName);
         ps.setString(2, MD5(password));
@@ -53,7 +178,7 @@ public class AccountsController {
     //Kiểm tra UserName đã tồn tại chưa ?
     public static boolean checkExistUserName(String userName) throws ClassNotFoundException, SQLException {
         conn = controller.ConnectionSQL.connectSQLServer();
-        sql = "select UserName from Accounts where UserName = ?";
+        sql = "select Username from Accounts where Username = ?";
         ps = conn.prepareStatement(sql);
         ps.setString(1, userName);
         rs = ps.executeQuery();
@@ -101,7 +226,7 @@ public class AccountsController {
     //Tạo Account mới
     public static void signUpAccounts(String userName, String email, String phoneNumber, String password) throws ClassNotFoundException, SQLException, NoSuchAlgorithmException {
         conn = controller.ConnectionSQL.connectSQLServer();
-        sql = "insert into Accounts(UserName,Email,PhoneNumber,Password) values (?,?,?,?)";
+        sql = "insert into Accounts(Username,Email,PhoneNumber,Password) values (?,?,?,?)";
         ps = conn.prepareStatement(sql);
         ps.setString(1, userName);
         ps.setString(2, email);
@@ -113,7 +238,7 @@ public class AccountsController {
     //Kiểm tra Email có tồn tại và thuộc Username đang làm việc không ?
     public static boolean checkEmailBelongUsername(String userName, String email) throws ClassNotFoundException, SQLException, NoSuchAlgorithmException {
         conn = controller.ConnectionSQL.connectSQLServer();
-        sql = "select Email from Accounts where UserName = ? AND Email = ?";
+        sql = "select Email from Accounts where Username = ? AND Email = ?";
         ps = conn.prepareStatement(sql);
         ps.setString(1, userName);
         ps.setString(2, email);
@@ -130,7 +255,7 @@ public class AccountsController {
     //New Password
     public static void forgotPassword(String userName, String email, String password) throws ClassNotFoundException, SQLException, NoSuchAlgorithmException {
         conn = controller.ConnectionSQL.connectSQLServer();
-        sql = "update Accounts set Password = ? where UserName = ? AND Email = ?";
+        sql = "update Accounts set Password = ? where Username = ? AND Email = ?";
         ps = conn.prepareStatement(sql);
         ps.setString(1, MD5(password));
         ps.setString(2, userName);
