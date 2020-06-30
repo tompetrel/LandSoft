@@ -326,14 +326,6 @@ public class AccountsController {
         ps.setInt(2, accountID);
         return ps.executeUpdate();
     }
-//    //Hàm lấy ra accoutID với username
-//    public static int getAccountID(String userName) throws ClassNotFoundException, SQLException {
-//        conn = controller.ConnectionSQL.connectSQLServer();
-//        sql = "select AccountID from Accounts where Username = ?";
-//        ps = conn.prepareStatement(sql);
-//        ps.setString(1, userName);
-//        rs = ps.executeQuery();
-//    }
 
     //Với accountID = 1 thì roleID của account đó cũng là 1
     public static void insertRoleAdmin() throws ClassNotFoundException, SQLException {
@@ -345,14 +337,11 @@ public class AccountsController {
         ps.executeUpdate();
     }
 
-    //Với account chưa được cấp quyền thì mặc định là standard user
-    public static void insertRoleDefault() throws ClassNotFoundException, SQLException {
+    public static String getRoleName(String userName) throws ClassNotFoundException, SQLException {
         conn = controller.ConnectionSQL.connectSQLServer();
-        int index = 1;
-        sql = "update Accounts set RoleID = 2 where AccountID != ?";
-        ps = conn.prepareStatement(sql);
-        ps.setInt(1, index);
-        ps.executeUpdate();
+        sql = "select RoleName from Role join Accounts on Role.RoleID = Accounts.RoleID where Accounts.Username = ?";
+        String roleName = "";
+        return roleName;
     }
 
 }
