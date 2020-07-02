@@ -19,14 +19,18 @@ public final class frmManagement extends javax.swing.JFrame {
     /**
      * Creates new form frmHome
      */
+    static String roleName;
+
     void roleAdmin() {
         try {
             //Account đầu tiên cấp quyền admin
             controller.AccountsController.insertRoleAdmin();
+
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
 
     void initGUIManagement() {
         try {
@@ -45,22 +49,15 @@ public final class frmManagement extends javax.swing.JFrame {
             this.setIconImage(icon.getImage());
 
             //Lable Username
-            String userName = frmLogin.userName;
-            lblUsername.setText(userName);
+            lblUsername.setText(frmLogin.userName);
             //Lable Role name
-            String roleName = controller.AccountsController.getRoleNameWithUserName(userName);
+            //Lấy ra role name theo username nhập vào
+            roleName = controller.AccountsController.getRoleNameWithUserName(frmLogin.userName);
             lblRoleName.setText(roleName);
 
-            switch (roleName) {
-                case "Administrator":
-                    JOptionPane.showMessageDialog(null, "Hello " + userName);
-                    break;
-                default:
-                    JOptionPane.showMessageDialog(null, "Hello " + userName);
-                    this.lblAccounts.setVisible(false);
-                    break;
+            if (!roleName.equals("Administrator")) {
+                this.lblAccounts.setVisible(false);
             }
-
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -69,8 +66,8 @@ public final class frmManagement extends javax.swing.JFrame {
 
     public frmManagement() {
         initComponents();
-        initGUIManagement();
         roleAdmin();
+        initGUIManagement();
     }
 
     /**

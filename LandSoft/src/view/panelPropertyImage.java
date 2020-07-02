@@ -66,6 +66,13 @@ public final class panelPropertyImage extends javax.swing.JPanel {
     }
 
     void initGUIPanelPropertyImage() {
+        try {
+            if (!controller.AccountsController.getRoleNameWithUserName(frmLogin.userName).equals("Administrator")) {
+                btnDelete.setVisible(false);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         btnUpdate.setEnabled(false);
         btnDelete.setEnabled(false);
     }

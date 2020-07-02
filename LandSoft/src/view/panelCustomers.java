@@ -33,20 +33,28 @@ public final class panelCustomers extends javax.swing.JPanel {
      * Creates new form panelCustomers
      */
     void initGUIPanelCustomers() {
-        btnUpdate.setEnabled(false);
-        btnDelete.setEnabled(false);
-        radioMale.setSelected(true);
+        try {
+            if (!controller.AccountsController.getRoleNameWithUserName(frmLogin.userName).equals("Administrator")) {
+                btnDelete.setVisible(false);
+            }
 
-        TableColumnModel columnModel = tblCustomer.getColumnModel();
-        columnModel.getColumn(0).setPreferredWidth(5);
-        columnModel.getColumn(1).setPreferredWidth(5);
-        columnModel.getColumn(2).setPreferredWidth(50);
-        columnModel.getColumn(3).setPreferredWidth(20);
-        columnModel.getColumn(4).setPreferredWidth(10);
-        columnModel.getColumn(5).setPreferredWidth(30);
-        columnModel.getColumn(6).setPreferredWidth(100);
-        columnModel.getColumn(7).setPreferredWidth(30);
-        columnModel.getColumn(8).setPreferredWidth(200);
+            btnUpdate.setEnabled(false);
+            btnDelete.setEnabled(false);
+            radioMale.setSelected(true);
+
+            TableColumnModel columnModel = tblCustomer.getColumnModel();
+            columnModel.getColumn(0).setPreferredWidth(5);
+            columnModel.getColumn(1).setPreferredWidth(5);
+            columnModel.getColumn(2).setPreferredWidth(50);
+            columnModel.getColumn(3).setPreferredWidth(20);
+            columnModel.getColumn(4).setPreferredWidth(10);
+            columnModel.getColumn(5).setPreferredWidth(30);
+            columnModel.getColumn(6).setPreferredWidth(100);
+            columnModel.getColumn(7).setPreferredWidth(30);
+            columnModel.getColumn(8).setPreferredWidth(200);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     void findCustomers() {

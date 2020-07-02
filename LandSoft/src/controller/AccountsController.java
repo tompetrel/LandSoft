@@ -337,11 +337,4 @@ public class AccountsController {
         ps.executeUpdate();
     }
 
-    public static String getRoleName(String userName) throws ClassNotFoundException, SQLException {
-        conn = controller.ConnectionSQL.connectSQLServer();
-        sql = "select RoleName from Role join Accounts on Role.RoleID = Accounts.RoleID where Accounts.Username = ?";
-        String roleName = "";
-        return roleName;
-    }
-
 }

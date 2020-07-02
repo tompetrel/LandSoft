@@ -33,6 +33,13 @@ public final class panelOwners extends javax.swing.JPanel {
      * Creates new form panelOwners
      */
     void initGUIPanelOwners() {
+        try {
+            if (!controller.AccountsController.getRoleNameWithUserName(frmLogin.userName).equals("Administrator")) {
+                btnDelete.setVisible(false);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         btnUpdate.setEnabled(false);
         btnDelete.setEnabled(false);
         radioMale.setSelected(true);

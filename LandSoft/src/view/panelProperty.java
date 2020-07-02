@@ -91,6 +91,9 @@ public final class panelProperty extends javax.swing.JPanel {
 
     void initGUIPanelProperty() {
         try {
+            if (!controller.AccountsController.getRoleNameWithUserName(frmLogin.userName).equals("Administrator")) {
+                btnDelete.setVisible(false);
+            }
             btnUpdate.setEnabled(false);
             btnDelete.setEnabled(false);
             btnDetailDescription.setEnabled(false);

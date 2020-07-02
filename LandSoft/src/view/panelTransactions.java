@@ -62,6 +62,13 @@ public final class panelTransactions extends javax.swing.JPanel {
     }
 
     void initGUIPanel() {
+        try {
+            if (!controller.AccountsController.getRoleNameWithUserName(frmLogin.userName).equals("Administrator")) {
+                btnDelete.setVisible(false);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         btnUpdate.setEnabled(false);
         btnDelete.setEnabled(false);
 
