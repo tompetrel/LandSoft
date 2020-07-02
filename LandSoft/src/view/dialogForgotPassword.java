@@ -195,7 +195,7 @@ public final class dialogForgotPassword extends javax.swing.JDialog {
                 return;
             }
             if (email.length() > 30) {
-                JOptionPane.showMessageDialog(null, "Email no more than 50 characters !");
+                JOptionPane.showMessageDialog(null, "Email no more than 30 characters !");
                 txtEmail.requestFocus();
                 return;
             }
@@ -221,9 +221,12 @@ public final class dialogForgotPassword extends javax.swing.JDialog {
                 txtPassword.setText("");
                 return;
             }
-            controller.AccountsController.forgotPassword(password, userName, email);
-            JOptionPane.showMessageDialog(null, "New Password Successfully !");
-            this.dispose();
+            int index = JOptionPane.showConfirmDialog(null, "Are you want to change password ?", "Notification", JOptionPane.YES_NO_OPTION);
+            if (index == JOptionPane.YES_OPTION) {
+                controller.AccountsController.forgotPassword(password, userName, email);
+                JOptionPane.showMessageDialog(null, "New Password Successfully !");
+                this.dispose();
+            }
 
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(dialogForgotPassword.class.getName()).log(Level.SEVERE, null, ex);

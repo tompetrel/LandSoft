@@ -459,6 +459,9 @@ public final class dialogSignUp extends javax.swing.JDialog {
                 ImageIcon icon = new ImageIcon(new ImageIcon(fileName).getImage().getScaledInstance(lblImage.getWidth(), lblImage.getHeight(), Image.SCALE_SMOOTH));
                 lblImage.setIcon(icon);
             }
+            if(result == JFileChooser.CANCEL_OPTION){
+                return;
+            }
             File img = new File(fileName);
             FileInputStream fis = new FileInputStream(img);
             ByteArrayOutputStream bos = new ByteArrayOutputStream();

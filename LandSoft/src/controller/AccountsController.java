@@ -244,14 +244,14 @@ public class AccountsController {
     }
 
     //New Password
-    public static void forgotPassword(String userName, String email, String password) throws ClassNotFoundException, SQLException, NoSuchAlgorithmException {
+    public static int forgotPassword(String password, String userName, String email) throws ClassNotFoundException, SQLException, NoSuchAlgorithmException {
         conn = controller.ConnectionSQL.connectSQLServer();
-        sql = "update Accounts set Password = ? where Username = ? AND Email = ?";
+        sql = "update Accounts set Password = ? where Username = ? and Email = ?";
         ps = conn.prepareStatement(sql);
         ps.setString(1, MD5(password));
         ps.setString(2, userName);
         ps.setString(3, email);
-        ps.executeUpdate();
+        return ps.executeUpdate();
     }
 
     //Lấy ra role name

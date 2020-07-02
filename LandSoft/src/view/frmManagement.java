@@ -25,7 +25,6 @@ public final class frmManagement extends javax.swing.JFrame {
         try {
             //Account đầu tiên cấp quyền admin
             controller.AccountsController.insertRoleAdmin();
-
         } catch (Exception e) {
             e.printStackTrace();
         }
